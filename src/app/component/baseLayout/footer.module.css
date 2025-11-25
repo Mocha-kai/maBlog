@@ -1,0 +1,85 @@
+/* src/app/component/baselayout/footer.module.css */
+
+/* --- 푸터 전체 컨테이너 --- */
+.footerContainer {
+    width: 100%;
+    background-color: #fafafa; /* 따뜻한 아이보리 톤 */
+    border-top: 1px solid #e0e0e0;
+    padding: 3rem 1.5rem 2rem;
+    margin-top: auto;
+}
+
+/* --- 내부 콘텐츠 정렬 --- */
+.footerInner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+}
+
+/* --- 브랜드 로고 --- */
+.brand {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #4c4c4c;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+}
+
+.accent {
+    color: #f7931e; /* 따뜻한 오렌지 포인트 */
+}
+
+/* --- 설명 텍스트 및 링크 --- */
+.description {
+    font-size: 0.95rem;
+    color: #7d7d7d;
+    margin: 0;
+    font-weight: 400;
+}
+
+.linkSection {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.link {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #6a6a6a;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+.link:hover {
+    color: #f7931e;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.separator {
+    color: #cfcfcf;
+    font-size: 0.8rem;
+}
+
+/* --- 저작권 --- */
+.copyright {
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    color: #a0a0a0;
+    font-family: sans-serif;
+}
+
+/* --- 반응형 --- */
+@media (max-width: 768px) {
+    .footerContainer {
+        padding: 2rem 1rem;
+    }
+}
