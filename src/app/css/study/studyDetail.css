@@ -1,0 +1,169 @@
+/*
+ * Study Detail Page Styles (.css)
+ * 일반적인 CSS 스타일을 정의합니다. (전역 적용됨)
+ */
+
+/* 전체 아티클 컨테이너 */
+.articleContainer {
+    max-width: 1024px; /* lg:max-w-4xl 대신 1024px */
+    margin: 0 auto;
+    padding: 48px 24px; /* py-12 px-6 */
+    background-color: #ffffff;
+}
+
+/* 로딩 스켈레톤 */
+.skeletonContainer {
+    max-width: 768px; /* max-w-4xl */
+    margin: 0 auto;
+    padding: 32px;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.skeletonTitle {
+    height: 32px;
+    background-color: #e5e7eb; /* gray-200 */
+    border-radius: 4px;
+    margin-bottom: 16px;
+    width: 75%;
+}
+
+.skeletonMeta {
+    height: 16px;
+    background-color: #e5e7eb;
+    border-radius: 4px;
+    width: 25%;
+    margin-bottom: 32px;
+}
+
+.skeletonBody div {
+    height: 12px;
+    background-color: #e5e7eb;
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* 헤더 영역 */
+.header {
+    border-bottom: 1px solid #e5e7eb; /* border-b border-gray-200 */
+    padding-bottom: 24px; /* pb-6 */
+    margin-bottom: 32px; /* mb-8 */
+}
+
+/* 카테고리 태그 (주황색 포인트) */
+.categoryTag {
+    display: inline-block;
+    padding: 4px 12px; /* px-3 py-1 */
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em; /* tracking-wider */
+    color: #ffffff;
+    background-color: #f97316; /* orange-600 */
+    border-radius: 9999px; /* rounded-full */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-md */
+}
+
+/* 제목 */
+.title {
+    font-size: 40px; /* text-4xl */
+    font-weight: 800; /* font-extrabold */
+    color: #111827; /* gray-900 */
+    margin-top: 16px; /* mt-4 */
+    line-height: 1.25; /* leading-tight */
+    word-break: break-word;
+}
+
+/* 날짜 메타 정보 */
+.dateMeta {
+    font-size: 14px;
+    color: #6b7280; /* gray-500 */
+    margin-top: 12px;
+}
+
+/* 본문 영역 */
+.contentArea {
+    /* 기존 Tailwind prose 클래스에 상응하는 기본 스타일 */
+    line-height: 1.75;
+    color: #374151; /* gray-700 */
+    font-size: 18px; /* text-lg */
+}
+
+.contentArea p {
+    margin-bottom: 16px;
+}
+
+.contentArea h2 {
+    font-size: 24px;
+    font-weight: 700;
+    padding-top: 16px;
+    border-top: 1px solid #f3f4f6; /* gray-100 */
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+
+.contentArea ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.contentArea li {
+    margin-bottom: 8px;
+}
+
+.blockquote {
+    border-left: 4px solid #f97316; /* orange-600 */
+    padding-left: 16px;
+    font-style: italic;
+    color: #4b5563; /* gray-600 */
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+/* 푸터 영역 */
+.footer {
+    margin-top: 48px; /* mt-12 */
+    padding-top: 24px; /* pt-6 */
+    border-top: 1px solid #e5e7eb; /* border-t border-gray-200 */
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* 목록으로 돌아가기 버튼 */
+.backLink {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* space-x-2 */
+    color: #f97316; /* orange-600 */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 150ms ease-in-out;
+}
+
+.backLink:hover {
+    color: #c04506; /* orange-800 hover */
+}
+
+/* 미디어 쿼리 (반응형: 모바일 최적화) */
+@media (max-width: 640px) {
+    .articleContainer {
+        padding: 24px 16px; /* 모바일 padding */
+    }
+    .title {
+        font-size: 32px; /* 모바일 제목 크기 */
+    }
+    .contentArea {
+        font-size: 16px;
+    }
+}

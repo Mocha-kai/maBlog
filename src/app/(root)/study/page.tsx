@@ -1,5 +1,5 @@
 const StudyPage = () => {
-    return <div>HobbyPage</div>;
+    return <>study</>;
 };
 
 export default StudyPage;

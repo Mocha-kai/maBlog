@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Style from './top.module.css';
+import CurTime from '../common/curTime';
 
 const TopLayout = () => {
     return (

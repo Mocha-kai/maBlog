@@ -1,4 +1,6 @@
 //===
+import QueryProvider from '../component/queryProvider/queryProvider';
+//===
 import TopLayout from '../component/baseLayout/top';
 import FooterLayout from '../component/baseLayout/bottom';
 //===
@@ -15,10 +17,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     margin: 0,
                 }}
             >
-                <TopLayout />
-
-                {/* main 영역이 남은 공간을 다 차지하도록 flex: 1 설정 */}
-                <main style={{ flex: 1, width: '100%' }}>{children}</main>
+                <QueryProvider>
+                    <TopLayout />
+                    <main style={{ flex: 1, width: '100%' }}>{children}</main>
+                </QueryProvider>
 
                 <FooterLayout />
             </body>
