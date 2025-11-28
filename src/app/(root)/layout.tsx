@@ -5,6 +5,10 @@ import TopLayout from '../component/baseLayout/top';
 import FooterLayout from '../component/baseLayout/bottom';
 //===
 import '../../app/globals.css';
+import '@/app/css/study/study.css';
+import '@/app/css/study/studyDetail.css';
+import '@/app/css/common/makePage.css';
+import '@/app/css/common/writeComponent.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (

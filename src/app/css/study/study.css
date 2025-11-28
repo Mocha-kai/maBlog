@@ -1,0 +1,144 @@
+/* StudyList.module.css */
+.listContainerWrapper {
+    display: block; /* 일반적인 블록 형식으로 배치 */
+    margin-top: 20px;
+}
+
+/* 개별 리스트 항목 */
+.listItemContainer {
+    display: flex; 
+    justify-content: space-between; /* 양 끝 정렬 */
+    align-items: center; 
+    padding: 15px 20px;
+    margin-bottom: 8px; /* 간격 축소 */
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    transition: all 0.2s ease; /* 모든 전환 효과에 대해 적용 */
+    text-decoration: none;
+    color: inherit;
+}
+
+.listItemContainer:hover {
+    background-color: #fffaf5; /* hover 시 배경색 조금 밝게 */
+    border-color: #f7931e;
+    transform: translateY(-2px); /* 살짝 위로 이동하는 효과 추가 */
+}
+
+.mainInfo {
+    flex-grow: 1; 
+    margin-right: 20px;
+    /* 모바일에서 메타 정보가 깨지지 않도록 최소 너비 설정 */
+    min-width: 50%; 
+}
+
+/* 항목 제목 */
+.itemTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+    color: #2c2c2c;
+}
+
+.itemSummary {
+    font-size: 0.9rem;
+    color: #777;
+    margin: 0;
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 내용 숨김 */
+    text-overflow: ellipsis; /* ... 표시 */
+}
+
+/* 메타 정보 (카테고리 & 날짜) */
+.meta {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-end; 
+    min-width: 100px; /* 최소 너비를 100px로 줄여 모바일 대응 */
+}
+
+/* 카테고리 태그 (이전 CSS 재활용) */
+.categoryTag {
+    font-weight: 700;
+    color: #f7931e; 
+    padding: 4px 8px;
+    border: 1px solid #f7931e;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+}
+
+/* 날짜 텍스트 */
+.dateText {
+    color: #777;
+    font-size: 0.8rem;
+}
+
+/* study 부분 */
+/* 전체 페이지 컨테이너: 최대 너비 설정 및 중앙 정렬 */
+.studyContainer {
+    max-width: 1280px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* 리스트 항목 간 간격을 15px로 조정 */
+    /* width: 1280px; <- 고정 너비를 제거하여 부모(.studyContainer)를 따르게 함 */
+    width: 100%; 
+}
+
+
+.pageTitle {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #2c2c2c;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #f7931e; 
+    padding-bottom: 10px;
+}
+
+/* --- 모바일 반응형 디자인 (studyContainer 내부 요소) --- */
+@media (max-width: 768px) {
+    .studyContainer {
+        margin: 20px auto;
+        padding: 0 15px;
+    }
+    .pageTitle {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+.listItemContainer {
+        /* 모바일에서는 세로 방향으로 쌓고 왼쪽 정렬 */
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 15px;
+    }
+
+    .mainInfo {
+        margin-right: 0;
+        margin-bottom: 10px;
+        min-width: 100%; /* 너비 전체 사용 */
+    }
+    
+    .itemSummary {
+        white-space: normal; /* 모바일에서는 줄바꿈 허용 */
+        -webkit-line-clamp: 2; /* 2줄까지만 표시 */
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .meta {
+        flex-direction: row; /* 메타 정보는 다시 가로로 배치 */
+        justify-content: space-between;
+        align-self: stretch; /* 부모 너비를 따라가도록 설정 */
+        min-width: unset;
+        font-size: 0.9rem;
+    }
+
+
+}

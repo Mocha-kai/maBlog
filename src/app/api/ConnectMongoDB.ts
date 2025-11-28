@@ -13,9 +13,8 @@ if (!cached) cached = (globalThis as CustomGlobalThis).mongooseCache = { conn: u
 //===
 const MONGO_URI = process.env.MONGO_URI;
 
-if (!MONGO_URI) {
-    throw new Error('MONGO_URI ERROR');
-}
+
+
 
 export const ConnectMongoDB = async (): Promise<Mongoose> => {
     if (cached.conn && cached.conn.connection.readyState === 1) return cached.conn;
@@ -25,6 +24,7 @@ export const ConnectMongoDB = async (): Promise<Mongoose> => {
         bufferCommands: false,
         authSource: 'admin',
     };
+    if (!MONGO_URI) throw new Error('MONGO_URI ERROR');
 
     cached.promise = mongoose.connect(MONGO_URI, opts).then((m) => m);
 

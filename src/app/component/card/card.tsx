@@ -1,16 +1,13 @@
 'use client';
 
+import Link from 'next/link';
 import Style from './card.module.css';
 import { IPostData } from '@/app/api/models/mDBTypeSetting';
-import { formatPostDate } from '../common/curTimeFormat';
-import Link from 'next/link';
+import { CurFormatKORDate}  from '@/app/component/common/CurFormatKORDate';
 
 const PostCard = ({ post }: { post: IPostData }) => {
     //날짜변경
-    const formatDate = formatPostDate(post.date);
-
-    console.log('test: ', `/${post.category.toLowerCase()}/detail/${post.slug}`);
-
+    const formatDate = CurFormatKORDate(post.date.toString());
     return (
         <Link className={Style.cardContainer} href={`/${post.category.toLowerCase()}/detail/${post.slug}`}>
             <div className={Style.meta}>

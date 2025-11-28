@@ -13,7 +13,7 @@ const FooterLayout = () => {
                     <div className={Style.brand}>
                         Ma<span className={Style.accent}>_</span>Blog
                     </div>
-                    <p className={Style.description}>기록하고, 공유하고, 성장하는 개발 블로그.</p>
+                    <p className={Style.description}>평안하기를</p>
                 </div>
 
                 {/* 중간: 링크 영역 (소셜, 연락처 등) */}
@@ -27,12 +27,9 @@ const FooterLayout = () => {
                         GitHub
                     </a>
                     <span className={Style.separator}>/</span>
-                    <a href="mailto:your-email@example.com" className={Style.link}>
+                    <a href="mailto:kojihu0@naver.com" className={Style.link}>
                         Email
                     </a>
-                    {/* 필요시 링크 추가 */}
-                    {/* <span className={Style.separator}>/</span>
-          <Link href="/about" className={Style.link}>About</Link> */}
                 </div>
 
                 {/* 하단: 저작권 표시 */}

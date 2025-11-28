@@ -1,17 +1,16 @@
-import { getPostsData } from '../api/Get/MogoDB_Get';
+// MainPage.tsx (일부 수정)
+
+import { GetPostsAllData } from '../api/Get/MogoDB_Get';
 import PostCard from '../component/card/card';
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import WriteComponent from '../component/common/writeComponent';
 
 const MainPage = async () => {
-    const queryClient = new QueryClient();
-    const postsInfo = await getPostsData();
-    queryClient.setQueryData(['posts'], postsInfo);
-    //데이터 직렬화
-    const dehydratedState = dehydrate(queryClient);
+    const postsInfo = await GetPostsAllData();
+  
+
     return (
-        // globals.css에서 정의한 .main-content 클래스를 사용하여 중앙 컨테이너 설정
         <main className="main-content">
-            <HydrationBoundary state={dehydratedState}>
+                <WriteComponent />
                 {/* 1. 환영 섹션 */}
                 <section
                     style={{
@@ -21,44 +20,40 @@ const MainPage = async () => {
                         margin: '0 auto',
                     }}
                 >
-                    {/* 블로그 제목 (h1) */}
                     <h1
                         style={{
                             fontSize: '3rem',
                             fontWeight: '900',
                             marginBottom: '0.5rem',
-                            color: '#2c2c2c', // 전역 스타일에서 사용한 진한 글자색
+                            color: '#2c2c2c',
                         }}
                     >
                         Ma_Dev
                     </h1>
-
-                    {/* 포인트 텍스트 */}
                     <p
                         style={{
                             fontSize: '1.25rem',
-                            color: '#f7931e', // 전역 포인트 색상
+                            color: '#f7931e',
                             fontWeight: '700',
                             marginBottom: '2rem',
                         }}
                     >
-                        마음은 계속해서 변하는 것, 그렇기에 실체는 없는 것, 그러하니 흘려보내야 하는 것.
+                       하루가 짧다.
                     </p>
                 </section>
 
-                {/* 2. 향후 게시글 목록 등이 들어갈 자리 */}
-                <section style={{ paddingTop: '40px', borderTop: '1px solid #eee' }}>
-                    {/* Placeholder: 최근 게시글 목록이 여기에 표시됩니다. */}
-                    <h2 style={{ textAlign: 'center', color: '#444' }}>Recent Contents</h2>
+                {/* 2. 게시글 목록 섹션 */}
+                <section style={{ padding: '40px 0', borderTop: '1px solid #eee' }}>
+                    <h2 style={{ textAlign: 'left', color: '#444', marginBottom: '30px' }}>Recent Contents</h2>
+                    
+                    {/* 💡 카드 목록을 위한 Grid 컨테이너 (인라인 스타일 사용) */}
                     <div
                         style={{
-                            height: '300px',
-                            backgroundColor: '#f5f5f5',
-                            border: '1px dashed #ddd',
-                            marginTop: '20px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
+                            // Grid 레이아웃 적용
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                            gap: '30px', /* 카드 사이 간격 */
+                            maxWidth: '1200px',
                         }}
                     >
                         {postsInfo.map((v) => (
@@ -66,7 +61,7 @@ const MainPage = async () => {
                         ))}
                     </div>
                 </section>
-            </HydrationBoundary>
+    
         </main>
     );
 };
