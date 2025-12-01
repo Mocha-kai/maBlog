@@ -8,7 +8,8 @@ import '../../app/globals.css';
 import '@/app/css/study/study.css';
 import '@/app/css/study/studyDetail.css';
 import '@/app/css/common/makePage.css';
-import '@/app/css/common/writeComponent.css';
+import '@/app/css/common/btn.css';
+import '@/app/css/common/modal.css'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (

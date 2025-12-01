@@ -2,10 +2,15 @@
 
 import { ConvertMarkdownToHtml } from '@/app/component/MKdouwn/transMD';
 import { ConnectMongoDB } from '../ConnectMongoDB'; // 상위 폴더의 DB 연결 함수 import
-import GetDataTypeSetting, { IPostData } from '@/app/api/models/mDBTypeSetting'; // 모델 import
+import GetDataTypeSetting, { IPostData, IPostDocument } from '@/app/api/models/mDBTypeSetting'; // 모델 import
 
 // 데이타 전부 가져오기
-export async function GetPostsAllData():Promise<IPostData[]> {
+const MONGO_URI = process.env.MONGO_URI;
+export async function GetPostsAllData(): Promise<IPostDocument[]> {
+    if (!MONGO_URI) {
+        console.warn('GetPostsAllData: MONGO_URI not set. Returning empty data for BUILD.');
+        return []; // DB 접근 없이 빈 배열 반환
+    }
 
     await ConnectMongoDB();
 
@@ -19,10 +24,14 @@ export async function GetPostsAllData():Promise<IPostData[]> {
 }
 // 데이터 하나만 가져오기
 export type IPostDataWithHtml = IPostData & { contentHtml: string };
-export async function GetPostOneData(slug:string):Promise<IPostDataWithHtml> {
+export async function GetPostOneData(slug: string): Promise<IPostDataWithHtml> {
+    if (!MONGO_URI) {
+        console.warn('GetPostsAllData: MONGO_URI not set. Returning empty data for BUILD.');
+        return { category: '', content: '', contentHtml: '', date: new Date(), slug: '', title: '' }; // DB 접근 없이 빈 배열 반환
+    }
+
     await ConnectMongoDB();
     try {
-
         //const { contentHtml } = await ConvertMarkdownToHtml(postPlain.content);
         const posts = await GetDataTypeSetting.find({ slug: slug }).lean();
         const jsonParsePosts = JSON.parse(JSON.stringify(posts[0]));
@@ -30,7 +39,7 @@ export async function GetPostOneData(slug:string):Promise<IPostDataWithHtml> {
 
         const finalPostData: IPostDataWithHtml = {
             ...jsonParsePosts,
-            contentHtml: convertMarkDown.contentHtml // ConvertMarkdownToHtml의 결과 사용
+            contentHtml: convertMarkDown.contentHtml, // ConvertMarkdownToHtml의 결과 사용
         };
         return finalPostData;
     } catch (error) {

@@ -3,7 +3,7 @@
 import mongoose, { Schema, model, models, Document } from 'mongoose';
 
 // 
-export interface IPostData extends Document {
+export interface IPostData {
     title: string;
     content: string;
     category: string;
@@ -12,7 +12,8 @@ export interface IPostData extends Document {
 }
 
 // 
-const postsSchema = new Schema<IPostData>(
+export interface IPostDocument extends IPostData, Document {}
+const postsSchema = new Schema<IPostDocument>(
     {
         title: { type: String, required: true, trim: true },
         content: { type: String },
@@ -26,6 +27,6 @@ const postsSchema = new Schema<IPostData>(
 );
 
 // 3.
-const GetDataTypeSetting = (models.posts as mongoose.Model<IPostData>) || model<IPostData>('posts', postsSchema);
+const GetDataTypeSetting = (models.posts as mongoose.Model<IPostDocument>) || model<IPostData>('posts', postsSchema);
 
 export default GetDataTypeSetting;
