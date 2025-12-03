@@ -1,12 +1,15 @@
 // src/app/api/models/mongoDB_Get.ts
+"use server";
 
 import { ConvertMarkdownToHtml } from '@/app/component/MKdouwn/transMD';
 import { ConnectMongoDB } from '../ConnectMongoDB'; // 상위 폴더의 DB 연결 함수 import
 import GetDataTypeSetting, { IPostData, IPostDocument } from '@/app/api/models/mDBTypeSetting'; // 모델 import
 
 // 데이타 전부 가져오기
-const MONGO_URI = process.env.MONGO_URI;
+
 export async function GetPostsAllData(): Promise<IPostDocument[]> {
+    const MONGO_URI = process.env.MONGO_URI;
+
     if (!MONGO_URI) {
         console.warn('GetPostsAllData: MONGO_URI not set. Returning empty data for BUILD.');
         return []; // DB 접근 없이 빈 배열 반환
@@ -25,6 +28,7 @@ export async function GetPostsAllData(): Promise<IPostDocument[]> {
 // 데이터 하나만 가져오기
 export type IPostDataWithHtml = IPostData & { contentHtml: string };
 export async function GetPostOneData(slug: string): Promise<IPostDataWithHtml> {
+    const MONGO_URI = process.env.MONGO_URI;
     if (!MONGO_URI) {
         console.warn('GetPostsAllData: MONGO_URI not set. Returning empty data for BUILD.');
         return { category: '', content: '', contentHtml: '', date: new Date(), slug: '', title: '' }; // DB 접근 없이 빈 배열 반환

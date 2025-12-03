@@ -1,13 +1,20 @@
-// MainPage.tsx (일부 수정)
+
+export const dynamic = "force-dynamic";
 
 import { GetPostsAllData } from '../api/Get/MogoDB_Get';
+import { IPostDocument } from '../api/models/mDBTypeSetting';
 import MainPageComponent from '../component/pageComponent/main/mainPageComponent';
 
 const MainPage = async () => {
-    const postsInfo = await GetPostsAllData();
-  
-    return  <MainPageComponent data={postsInfo} />
-    
+    let postsInfo: IPostDocument[] = [];
+    try {
+        postsInfo = await GetPostsAllData();
+    } catch (error) {
+        console.error('❌ SERVER CRASH LOG: GetPostsAllData에서 치명적인 오류 발생!', error);
+    }
+    return (
+            <MainPageComponent data={postsInfo} />
+    );
 };
 
 export default MainPage;

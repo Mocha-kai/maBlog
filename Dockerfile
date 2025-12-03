@@ -1,46 +1,44 @@
-# ----------------------------------------------------------------------
-# [빌드 스테이지]: 의존성 설치 및 Next.js 앱 빌드 (NPM 사용)
+# ---------------------------------------------------------------------- 
+# build stage <- 의존성 설치 & Next.js 빌드
 # ----------------------------------------------------------------------
 FROM node:20-alpine AS builder
-
 WORKDIR /app
-# package.json 파일과 잠금 파일을 복사하여 의존성 레이어 캐싱
+# package.json 캐싱
 COPY package.json package-lock.json ./ 
-# npm ci: package-lock.json을 사용해 깨끗하게 의존성 설치
+# ci로 의존성 설치
 RUN npm ci 
-# 나머지 소스 코드 복사
+# 나머지 복사
 COPY . .
-
-# Next.js 앱 빌드 전
-# 이 부분이 빌드 시 DB 연결을 막는 역할을 합니다.
-ENV MONGO_URI=
 # Next.js 앱 빌드 
 RUN npm run build 
 
 # ----------------------------------------------------------------------
-# [실행 스테이지]: 프로덕션에서 실행할 가벼운 이미지 (NPM 사용)
+# Runner stage <- 서버에서실행할 최소한의 파일
 # ----------------------------------------------------------------------
 FROM node:20-alpine AS runner
 
-# Next.js의 보안 권장 사항에 따라 비루트(non-root) 사용자 생성
+# Next.js의 보안 권장 사항 <- 루트 사용 x 
+# 보안을 위해서 nextjs 라는 신규 그룹을 만든다.
 RUN addgroup -g 1001 -S nextjs
+#adduser -S<-신규 사용자 계정을 만들고 -G <- nextjs 그룹으로 엮는다.
 RUN adduser -S nextjs -u 1001 -G nextjs
-
 ENV NODE_ENV production
-ENV PORT 3000
+# OCI에서 포트포워딩을 위해 8080으로 변경
+ENV PORT 8080
 
 WORKDIR /app
 
-# 빌드 결과물과 실행에 필요한 파일만 복사
-COPY --from=builder /app/package.json /app/package.json
-COPY --from=builder /app/node_modules /app/node_modules
-COPY --from=builder /app/.next /app/.next
-COPY --from=builder /app/public /app/public
+# [수정] 빌드 결과물 복사: standalone 모드에서는 '.next/standalone' 디렉토리만 복사합니다.
+# 이 디렉토리에는 node_modules까지 포함되어 있어 이미지 크기를 최소화합니다.
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public /public
 
 # 비루트 사용자로 전환 (보안 강화)
 USER nextjs
 
-EXPOSE 3000
+EXPOSE 8080
 
-# Next.js 서버를 직접 실행하도록 명령 설정
-CMD ["npm", "start"]
+# Next.js 서버를 직접 실행하도록 명령어 변경
+# standalone 모드에서는 'server.js'가 시작 파일입니다.
+CMD ["node", "server.js"]

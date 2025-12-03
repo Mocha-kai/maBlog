@@ -19,11 +19,31 @@ const WriteForm = ({ category, inputList }: { category: string[]; inputList: Inp
     const ChangeFormData = (value: string, target:string) => {
         setFormData((prev) => ({ ...prev, [target]: value }));
     };
-    const ClickSubmit = () => {
+    const ClickSubmit = async () => {
         console.log('asd');
+        try {
+            // 💡 핵심: fetch를 사용하여 서버 API Route 호출
+            const response = await fetch('/api/Insert', { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData) // 데이터를 JSON 형태로 전송
+            });
+
+            console.log(response);
+
+            setFormData({
+                title: '',
+                content: '',
+                category: '',
+                date: new Date().toISOString().substring(0, 10),
+                slug: '',
+            })
+            
+        }catch(e){
+            console.log(e)
+        }
     };
 
-    console.log('formData', formData);
     return (
         <form onSubmit={ClickSubmit}>
             <div className={styles.inputGroup}>
@@ -87,7 +107,7 @@ const WriteForm = ({ category, inputList }: { category: string[]; inputList: Inp
 
             {/* 버튼 영역 */}
             <div style={{ marginTop: '20px', textAlign: 'right' }}>
-                <button type="submit" className={styles.saveButton}>
+                <button type="submit" className={styles.saveButton}  >
                     Upload
                 </button>
             </div>

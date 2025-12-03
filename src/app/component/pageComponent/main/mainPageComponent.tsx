@@ -6,7 +6,8 @@ import PostCard from "../../card/card";
 import WriteForm from "../../common/writeForm";
 
 const MainPageComponent = ({data}: {data: IPostDocument[]}) =>{
-
+    console.log('여기도 오잖아? 시작컴포넌트인데 왔지?');
+    console.log('data', data);
     const [isClick, setIsClick] = useState<boolean>(false);
 
         return <>
