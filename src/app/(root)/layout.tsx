@@ -1,5 +1,5 @@
 //===
-import QueryProvider from '../component/queryProvider/queryProvider';
+import AuthProviderWrapper from "../component/authProvider/authProviderWrapper";
 //===
 import TopLayout from '../component/baseLayout/top';
 import FooterLayout from '../component/baseLayout/bottom';
@@ -22,12 +22,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     margin: 0,
                 }}
             >
-                <QueryProvider>
+                <AuthProviderWrapper>
                     <TopLayout />
                     <main style={{ flex: 1, width: '100%' }}>{children}</main>
-                </QueryProvider>
-
-                <FooterLayout />
+                    <FooterLayout />
+                </AuthProviderWrapper>
             </body>
         </html>
     );

@@ -21,23 +21,5 @@ export async function POST(request: NextRequest) {
             { status: 500 } // 500 Internal Server Error
         );
     }
-
-    // await ConnectMongoDB();
-
-    // const body = await request.json();
-    // const {     
-    //     title,
-    //     content,
-    //     category,
-    //     date,
-    //     slug } = body;
-
-    //     console.log('body',body);
-
-    // const result = await InsertPostData({title, content, category, date, slug});
-    // return NextResponse.json(
-    //             { message: 'Insert Success', data: result },
-    //             { status: 201 } // 201 Created
-    //         );
 }
 

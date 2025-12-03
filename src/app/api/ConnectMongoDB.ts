@@ -19,7 +19,6 @@ export const ConnectMongoDB = async (): Promise<Mongoose| undefined> => {
     if (cached.promise) return cached.promise;
 
 
-
     if (!MONGO_URI) {
         console.warn('WARNING: MONGO_URI is not set. Skipping MongoDB connection.');
         return undefined; 

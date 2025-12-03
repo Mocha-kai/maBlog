@@ -4,9 +4,7 @@
 import { ConvertMarkdownToHtml } from '@/app/component/MKdouwn/transMD';
 import { ConnectMongoDB } from '../ConnectMongoDB'; // 상위 폴더의 DB 연결 함수 import
 import GetDataTypeSetting, { IPostData, IPostDocument } from '@/app/api/models/mDBTypeSetting'; // 모델 import
-
 // 데이타 전부 가져오기
-
 export async function GetPostsAllData(): Promise<IPostDocument[]> {
     const MONGO_URI = process.env.MONGO_URI;
 
@@ -14,9 +12,7 @@ export async function GetPostsAllData(): Promise<IPostDocument[]> {
         console.warn('GetPostsAllData: MONGO_URI not set. Returning empty data for BUILD.');
         return []; // DB 접근 없이 빈 배열 반환
     }
-
     await ConnectMongoDB();
-
     try {
         const posts = await GetDataTypeSetting.find({}).lean();
         return JSON.parse(JSON.stringify(posts));

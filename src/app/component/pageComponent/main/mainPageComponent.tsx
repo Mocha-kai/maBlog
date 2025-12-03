@@ -4,12 +4,10 @@ import { IPostData, IPostDocument } from "@/app/api/models/mDBTypeSetting";
 import { useState } from "react";
 import PostCard from "../../card/card";
 import WriteForm from "../../common/writeForm";
+import AuthButton from "@/app/component/common/authBtn";
 
 const MainPageComponent = ({data}: {data: IPostDocument[]}) =>{
-    console.log('여기도 오잖아? 시작컴포넌트인데 왔지?');
-    console.log('data', data);
     const [isClick, setIsClick] = useState<boolean>(false);
-
         return <>
           <main className="main-content">
                          {/* 1. 환영 섹션 */}
@@ -47,7 +45,8 @@ const MainPageComponent = ({data}: {data: IPostDocument[]}) =>{
                          <section style={{ padding: '40px 0', borderTop: '1px solid #eee' }}>
                            
                              <h2 style={{ display: 'flex',justifyContent:'space-between' , textAlign: 'left', color: '#444', marginBottom: '30px' }}>Recent Contents
-                                 <button className="blog-primary-btn" onClick={()=>setIsClick(true)}>Insert</button>
+                                 <AuthButton />
+                                 {/* <button className="blog-primary-btn" onClick={()=>setIsClick(true)}>Insert</button> */}
                              </h2>
                              {/* 💡 카드 목록을 위한 Grid 컨테이너 (인라인 스타일 사용) */}
                              <div

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './WroteForm.module.css';
+import styles from './writeForm.module.css';
 
 type InputTagType = 'input' | 'TextArea';
 type InputType = {
@@ -20,7 +20,6 @@ const WriteForm = ({ category, inputList }: { category: string[]; inputList: Inp
         setFormData((prev) => ({ ...prev, [target]: value }));
     };
     const ClickSubmit = async () => {
-        console.log('asd');
         try {
             // 💡 핵심: fetch를 사용하여 서버 API Route 호출
             const response = await fetch('/api/Insert', { 
@@ -28,9 +27,6 @@ const WriteForm = ({ category, inputList }: { category: string[]; inputList: Inp
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData) // 데이터를 JSON 형태로 전송
             });
-
-            console.log(response);
-
             setFormData({
                 title: '',
                 content: '',
