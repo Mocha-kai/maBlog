@@ -7,11 +7,8 @@ export default function AuthButton() {
 
   if (session) {
     return (
-      <>
-        <span>Hi, {session.user?.email}</span>
-        <button onClick={() => signOut()}>Logout</button>
-      </>
+        <button onClick={() => signOut()} className="blog-primary-btn">logout</button>
     );
   }
-  return <button onClick={() => signIn("github")} className="blog-primary-btn">GiT</button>;
+  return <button onClick={() => signIn("github")} className="blog-primary-btn">Login(GiT)</button>;
 }

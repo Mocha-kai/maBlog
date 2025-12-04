@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   db:
     image: mongo:7.0
@@ -17,16 +15,14 @@ services:
 
   mablog_nextjs:
     build:
-      context: ./app
-      target: prod
+      context: .
+      dockerfile: Dockerfile
     container_name: mablog_nextjs
     restart: always
     expose:
       - "8080"
-    environment:
-      - MONGO_URI=mongodb://mongoAdmin:mongoA96547852!@db:27017/maBlog_DataTable?authSource=admin
-      - HOST=0.0.0.0
-      - PORT=8080
+    env_file:
+      - ./.env.production
     depends_on:
       - db
     networks:
@@ -59,7 +55,7 @@ services:
       certbot certonly
       --webroot
       --webroot-path=/var/www/certbot
-      --email your-email@example.com
+      --email kai@mocha-company.com
       --agree-tos
       --no-eff-email
       -d madayblog.com

@@ -27,7 +27,7 @@ const FooterLayout = () => {
                         GitHub
                     </a>
                     <span className={Style.separator}>/</span>
-                    <a href="mailto:kojihu0@naver.com" className={Style.link}>
+                    <a href="mailto:kai@mocha-company.com" className={Style.link}>
                         Email
                     </a>
                 </div>
