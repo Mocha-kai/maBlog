@@ -1,14 +1,26 @@
-"use client";
+'use client';
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useEffect } from 'react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
-export default function AuthButton() {
-  const { data: session } = useSession();
+export default function AuthButton({ isLogin }: { isLogin: (check: boolean) => void }) {
+    const { data: session } = useSession();
 
-  if (session) {
+    useEffect(() => {
+        if (session) isLogin(true);
+        else isLogin(false);
+    }, [session, isLogin]);
+
+    if (session) {
+        return (
+            <button onClick={() => signOut()} className="blog-login-btn">
+                Logout
+            </button>
+        );
+    }
     return (
-        <button onClick={() => signOut()} className="blog-primary-btn">logout</button>
+        <button onClick={() => signIn('github')} className="blog-login-btn">
+            Login(GiT)
+        </button>
     );
-  }
-  return <button onClick={() => signIn("github")} className="blog-primary-btn">Login(GiT)</button>;
 }

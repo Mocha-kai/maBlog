@@ -18,6 +18,7 @@
     padding-bottom: 10px;
 }
 .metadataGrid {
+    margin: 0 auto;
     display: grid;
     grid-template-columns: 3fr 1fr;
     gap: 20px;
@@ -45,7 +46,6 @@
     }
 }
 
-
 /* ---------------------------------------------------- */
 /* --- 폼 필드 스타일 (WriteForm에 주로 사용됨) --- */
 /* ---------------------------------------------------- */
@@ -63,7 +63,9 @@
     letter-spacing: -0.5px;
 }
 
-.input, .select, .textarea {
+.input,
+.select,
+.textarea {
     box-sizing: border-box;
     width: 100%;
     padding: 10px 12px; /* 패딩 조정 */
@@ -76,7 +78,9 @@
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* 은은한 내부 그림자 */
 }
 
-.input:focus, .select:focus, .textarea:focus {
+.input:focus,
+.select:focus,
+.textarea:focus {
     border-color: #f7931e;
     box-shadow: 0 0 0 1px #f7931e, inset 0 1px 3px rgba(0, 0, 0, 0.05); /* 포커스 시 테두리 및 그림자 강화 */
     outline: none;
@@ -128,74 +132,31 @@
     cursor: not-allowed;
     box-shadow: none;
 }
-
-
-/* ---------------------------------------------------- */
-/* --- Modal Styles --- */
-/* ---------------------------------------------------- */
-
-.modalDiv {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(3px);
+.editorRow {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    opacity: 1;
-    transition: opacity 0.3s ease-in-out;
+    gap: 20px; /* 간격 */
+    margin-top: 20px;
 }
 
-.modalContent {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-    width: 90%;
-    max-width: 400px; /* 모달 크기 */
-    transform: scale(1);
-    transition: transform 0.3s ease-in-out;
-    position: relative;
-    border-top: 5px solid #f7931e; 
+/* textarea */
+.textarea {
+    width: 50%;
+    min-height: 300px;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    resize: vertical;
 }
 
-.modalHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-}
-
-.modalTitle {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #2c2c2c;
-}
-
-.closeButton {
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    font-weight: 300;
-    color: #888;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0;
-    transition: color 0.2s;
-}
-
-.closeButton:hover {
-    color: #f7931e;
-}
-
-@media (max-width: 600px) {
-    .modalContent {
-        margin: 20px;
-    }
+/* 미리보기 영역 */
+.preview {
+    width: 50%;
+    min-height: 300px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    overflow: auto;
 }

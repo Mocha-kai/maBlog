@@ -6,14 +6,13 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background-color: rgba(255, 255, 255, 0.9); 
+    background-color: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 
 .headerInner {
     width: 100%;
@@ -22,8 +21,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box;
 }
-
 
 .logoLink {
     text-decoration: none;
@@ -40,7 +39,7 @@
 }
 
 .accent {
-    color: #f7931e; 
+    color: #f7931e;
     display: inline-block;
     margin: 0 2px;
     animation: pulse 2s infinite;
@@ -68,8 +67,6 @@
     color: #f7931e;
     border-bottom: 2px solid #f7931e;
 }
-
-
 
 .mobileMenuPanel {
     display: none;

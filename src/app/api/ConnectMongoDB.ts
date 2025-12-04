@@ -13,15 +13,13 @@ if (!cached) cached = (globalThis as CustomGlobalThis).mongooseCache = { conn: u
 //===
 const MONGO_URI = process.env.MONGO_URI;
 
-
-export const ConnectMongoDB = async (): Promise<Mongoose| undefined> => {
+export const ConnectMongoDB = async (): Promise<Mongoose | undefined> => {
     if (cached.conn && cached.conn.connection.readyState === 1) return cached.conn;
     if (cached.promise) return cached.promise;
 
-
     if (!MONGO_URI) {
         console.warn('WARNING: MONGO_URI is not set. Skipping MongoDB connection.');
-        return undefined; 
+        return undefined;
     }
     const opts = {
         bufferCommands: false,

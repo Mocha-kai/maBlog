@@ -21,12 +21,12 @@
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     width: 100%;
-    max-width: 400px; /* 적당한 최대 너비 */
+    max-width: 800px; /* 적당한 최대 너비 */
     transform: scale(1);
     transition: transform 0.3s ease-in-out;
     position: relative;
     /* 블로그 주황색 테마에 맞춘 테두리 강조 */
-    border-top: 5px solid #f7931e; 
+    border-top: 5px solid #f7931e;
 }
 
 /* 모달 닫기 버튼 또는 헤더 스타일 (선택 사항) */

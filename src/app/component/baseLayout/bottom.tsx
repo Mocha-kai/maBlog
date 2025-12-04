@@ -1,5 +1,5 @@
 'use client';
-import Link from 'next/link';
+
 import Style from './footer.module.css';
 
 const FooterLayout = () => {
@@ -28,7 +28,7 @@ const FooterLayout = () => {
                     </a>
                     <span className={Style.separator}>/</span>
                     <a href="mailto:kai@mocha-company.com" className={Style.link}>
-                        Email
+                        Email:kai@mocha-company.com
                     </a>
                 </div>
 

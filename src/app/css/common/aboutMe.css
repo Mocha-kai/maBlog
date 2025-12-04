@@ -1,0 +1,97 @@
+/* 전체 섹션 컨테이너 스타일 */
+.dev-intro-section {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+}
+
+/* 제목 스타일 */
+.intro-title {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #333333;
+    margin-bottom: 5px;
+}
+
+/* 자기소개 문구 스타일 */
+.intro-bio {
+    font-size: 1em;
+    color: #555555;
+    line-height: 1.6;
+    margin-bottom: 20px; /* 스택과 분리 */
+}
+
+/* 기술 스택 컨테이너 */
+.tech-stack-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px; /* 뱃지 사이 간격 */
+    margin-bottom: 25px;
+}
+
+.stack-badge {
+    padding: 6px 14px;
+    border-radius: 20px; /* 둥근 알약 모양 */
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+    cursor: default;
+}
+
+/* 뱃지: 마우스 오버 시 효과 */
+.stack-badge:hover {
+    transform: translateY(-2px); /* 살짝 위로 이동 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.control-btn {
+    /* 버튼 모양 */
+    width: 28px;
+    height: 28px;
+    border-radius: 50%; /* 완벽한 원 */
+
+    /* 폰트 및 중앙 정렬 */
+    font-size: 1.2em;
+    font-weight: 500;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* 색상 및 경계 */
+    background-color: transparent; /* 배경 투명 */
+    border: 1px solid #d0d0d0; /* 연한 회색 테두리 */
+    color: #555555; /* 진한 회색 텍스트 */
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+/* 마우스 오버 시 효과 (클릭 가능한 느낌 부여) */
+.control-btn:hover {
+    background-color: #f0f0f0; /* 배경색 살짝 변경 */
+    border-color: #a0a0a0; /* 테두리색 살짝 진하게 */
+    color: #333333;
+}
+/* + (플러스) 버튼 강조 (새로운 것을 '추가'하는 느낌) */
+.plus-btn {
+    border-color: #f7931e; /* 파란색 테두리 */
+    color: #f7931e; /* 파란색 텍스트 */
+}
+
+.plus-btn:hover {
+    background-color: #f7931e; /* 연한 파란색 배경 */
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+/* --- 7. 반응형 미디어 쿼리 (768px 이하) --- */
+@media (max-width: 768px) {
+    .control-btn {
+        display: none;
+    }
+}
