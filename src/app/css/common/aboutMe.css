@@ -35,6 +35,7 @@
 }
 
 .stack-badge {
+    color: white;
     padding: 6px 14px;
     border-radius: 20px; /* 둥근 알약 모양 */
     font-size: 0.85em;

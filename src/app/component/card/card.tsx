@@ -2,10 +2,11 @@
 
 import Link from 'next/link';
 import Style from './card.module.css';
-import { IPostData } from '@/app/api/models/mDBTypeSetting';
-import { CurFormatKORDate}  from '@/app/component/common/CurFormatKORDate';
 
-const PostCard = ({ post }: { post: IPostData }) => {
+import { CurFormatKORDate}  from '@/app/component/common/CurFormatKORDate';
+import { BaseInsertPostType } from '@/app/api/models/posts/model_posts';
+
+const PostCard = ({ post }: { post: BaseInsertPostType }) => {
     //날짜변경
     const formatDate = CurFormatKORDate(post.date.toString());
     return (
