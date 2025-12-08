@@ -1,0 +1,194 @@
+.dashboardContainer {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+.dashboardHeader {
+    padding: 20px;
+}
+.dashboardTitle {
+    font-size: 1rem;
+    font-weight: 600; /* CRT 폰트는 굵은 글씨가 잘 안나타납니다 */
+    color: #00ff41; /* 녹색 */
+}
+
+.dashboardGrid {
+    display: grid;
+    padding: 0 20 20 20;
+    grid-template-columns: 2fr 1fr 0.5fr;
+    gap: 10px;
+}
+
+.gridItem {
+    height: 250px;
+    border: 2px solid #00ff41;
+    padding: 20px;
+}
+
+.moduleHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.moduleTitle {
+    font-size: 1rem;
+    font-weight: 200;
+    color: #33ff66;
+}
+
+.moduleTitle::before {
+    content: '[';
+    margin-right: 2px;
+}
+.moduleTitle::after {
+    content: ']';
+    margin-left: 2px;
+}
+
+/* ========================================= */
+
+.writeButton {
+    padding: 3px 8px;
+    border: 1px solid #00ff41;
+    background-color: transparent;
+    color: #00ff41;
+    cursor: pointer;
+}
+.writeButton,
+.closeButton {
+    background-color: transparent;
+    color: #00ff41;
+    border: 1px solid #00ff41;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 3px 8px;
+    transition: background-color 0.1s;
+    box-shadow: 0 0 5px rgba(0, 255, 65, 0.4);
+}
+
+.writeButton:hover,
+.closeButton:hover {
+    background-color: rgba(0, 255, 65, 0.2);
+}
+/* ==================================== */
+/* 4. 메인 그리드 레이아웃 (PC) */
+/* ==================================== */
+
+.monitorModule,
+.logModule {
+    background-color: #000;
+    border: 2px solid #00ff41;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+    overflow: hidden;
+}
+
+.logPlaceholderCard {
+    font-size: 1rem;
+    color: #00ff41;
+    padding: 10px; /* 내용과 테두리 사이 여백 추가 */
+    white-space: pre;
+    border: 1px solid #00ff41;
+    overflow: hidden;
+}
+
+.logList {
+    max-height: 800px;
+    display: flex;
+    gap: 20px;
+    padding-right: 10px;
+}
+
+.logListLeft {
+    background-color: transparent;
+    color: #00ff41;
+    border: 1px solid #00ff41;
+    max-width: 800px;
+    width: 30%;
+    height: 800px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.LeftContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.logListRight {
+    background-color: transparent;
+    color: #00ff41;
+    width: 100%;
+    border: 1px solid #00ff41;
+    padding: 20px;
+    box-sizing: border-box;
+}
+/* ==================================== */
+/* 5. 웹킷 스크롤 바 스타일링 (Chrome, Safari, Edge) */
+/* ==================================== */
+
+/* 스크롤 바 전체 트랙의 너비/높이 설정 */
+.logContent::-webkit-scrollbar {
+    width: 10px; /* 스크롤 바의 너비 */
+    height: 10px;
+}
+
+/* 스크롤 바가 움직이는 배경 (트랙) */
+.logContent::-webkit-scrollbar-track {
+    background: transparent; /* 트랙을 투명하게 만듭니다. */
+    border: 1px solid rgba(0, 255, 65, 0.1); /* 아주 옅은 녹색 테두리 */
+}
+
+/* 스크롤을 움직이는 부분 (엄지/Thumb) */
+.logContent::-webkit-scrollbar-thumb {
+    background-color: #00ff41; /* CRT 녹색으로 색상 변경 */
+    border-radius: 5px; /* 모서리를 둥글게 */
+    border: 2px solid #000000; /* 엄지 주변에 검은색 테두리를 넣어 분리감을 줍니다. */
+}
+
+/* 전체 페이지의 스크롤 바도 동일하게 적용하고 싶다면 */
+::-webkit-scrollbar-thumb {
+    background-color: #00ff41;
+}
+
+::-webkit-scrollbar-track {
+    background: #000000;
+}
+
+/* ==================================== */
+/* 6. 명령 프롬프트 영역 */
+/* ==================================== */
+
+.promptArea {
+    border: 2px solid #00ff41;
+    padding: 10px 15px;
+    font-size: 1.2rem;
+}
+
+/* ==================================== */
+/* 7. 반응형 처리 (Mobile) */
+/* ==================================== */
+/* 768px 이하 (태블릿 및 모바일) */
+@media (max-width: 768px) {
+    .dashboardContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4) 1px, transparent 1px);
+        background-size: 100% 2px;
+        box-sizing: border-box;
+    }
+    .logListRight,
+    .writeButton {
+        display: none;
+    }
+
+    .monitorGrid {
+        /* 1열로 변경 (모듈이 모두 세로로 쌓이게) */
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}
