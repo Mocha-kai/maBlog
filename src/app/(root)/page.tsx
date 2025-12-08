@@ -1,19 +1,27 @@
 
 export const dynamic = "force-dynamic";
 
-import { GetPostsAllData } from '../api/Get/MogoDB_Get';
-import { IPostDocument } from '../api/models/mDBTypeSetting';
+import { GetPostsAllData } from '../api/controller/GET/GETmDBTypePosts';
+import { GetStackAllData } from '../api/controller/GET/GETmDBTypeStack';
+import { IPostDocument } from '../api/models/posts/model_posts';
+import { IStackDocument } from '../api/models/stacks/model_stacks';
+
 import MainPageComponent from '../component/pageComponent/main/mainPageComponent';
 
 const MainPage = async () => {
     let postsInfo: IPostDocument[] = [];
+    let stackInfo: IStackDocument[] = [];
     try {
         postsInfo = await GetPostsAllData();
+        stackInfo = await GetStackAllData();
+
+        console.log('stackInfo', stackInfo);
+        console.log('postsInfo', postsInfo);
     } catch (error) {
         console.error('❌ SERVER CRASH LOG: GetPostsAllData에서 치명적인 오류 발생!', error);
     }
     return (
-            <MainPageComponent data={postsInfo} />
+            <MainPageComponent postData={postsInfo} stackData={stackInfo}/>
     );
 };
 

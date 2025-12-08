@@ -1,4 +1,7 @@
 services:
+  # --------------------------
+  # MongoDB
+  # --------------------------
   db:
     image: mongo:7.0
     container_name: mablog_mongodb
@@ -13,6 +16,9 @@ services:
     networks:
       - mablog_network
 
+  # --------------------------
+  # Next.js 앱
+  # --------------------------
   mablog_nextjs:
     build:
       context: .
@@ -20,7 +26,7 @@ services:
     container_name: mablog_nextjs
     restart: always
     expose:
-      - "8080"
+      - "8080" # 내부 연결용
     env_file:
       - ./.env.production
     depends_on:
@@ -28,15 +34,18 @@ services:
     networks:
       - mablog_network
 
-  mablog_cp:
-    image: nginx:latest
-    container_name: mablog_cp
+  # --------------------------
+  # Nginx 프록시
+  # --------------------------
+  mablog_proxy:
+    image: nginx:stable-alpine
+    container_name: mablog_proxy
     restart: always
     ports:
-      - "80:80"
-      - "443:443"
+      - "80:80"   # HTTP
+      - "443:443" # HTTPS
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./certbot/www:/var/www/certbot
       - ./certbot/conf:/etc/letsencrypt
     depends_on:
@@ -44,6 +53,9 @@ services:
     networks:
       - mablog_network
 
+  # --------------------------
+  # Certbot 인증서 발급
+  # --------------------------
   certbot:
     image: certbot/certbot
     container_name: certbot
@@ -60,6 +72,8 @@ services:
       --no-eff-email
       -d madayblog.com
       -d www.madayblog.com
+    networks:
+      - mablog_network
 
 networks:
   mablog_network:

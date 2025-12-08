@@ -1,13 +1,18 @@
 'use client';
-
-import { IPostDocument } from '@/app/api/models/mDBTypeSetting';
+//===
 import { useState } from 'react';
+//===
+import { IPostDocument } from '@/app/api/models/posts/model_posts';
+import { IStackDocument } from '@/app/api/models/stacks/model_stacks';
+//===
+import AboutMe from '@/app/component/pageComponent/main/aboutMe';
 import PostCard from '../../card/card';
-import WriteForm from '../../common/writeForm';
+import WriteForm from './writeForm';
 import AuthButton from '@/app/component/common/authBtn';
-import AboutMe from '../../common/aboutMe';
 
-const MainPageComponent = ({ data }: { data: IPostDocument[] }) => {
+//===
+const MainPageComponent = ({  postData, stackData }: { postData: IPostDocument[]; stackData: IStackDocument[] }) => {
+    //===
     const [isClick, setIsClick] = useState<boolean>(false);
     const [isLogin, setIsLogin] = useState<boolean>(false);
 
@@ -60,7 +65,7 @@ const MainPageComponent = ({ data }: { data: IPostDocument[] }) => {
                     </h2>
                     <AuthButton isLogin={setIsLogin} />
                 </div>
-                <AboutMe isLogin={isLogin} />
+                <AboutMe isLogin={isLogin}  stackData={stackData}/>
                 {/* 2. 게시글 목록 섹션 */}
                 <section style={{ padding: '40px 0' }}>
                     <h2
@@ -92,7 +97,7 @@ const MainPageComponent = ({ data }: { data: IPostDocument[] }) => {
                             margin: '0 auto',
                         }}
                     >
-                        {data.map((v) => (
+                        {postData.map((v) => (
                             <PostCard key={v._id.toString()} post={v} />
                         ))}
                     </div>
