@@ -47,16 +47,7 @@
 }
 
 /* ========================================= */
-
-.writeButton {
-    padding: 3px 8px;
-    border: 1px solid #00ff41;
-    background-color: transparent;
-    color: #00ff41;
-    cursor: pointer;
-}
-.writeButton,
-.closeButton {
+.dashboardBtn {
     background-color: transparent;
     color: #00ff41;
     border: 1px solid #00ff41;
@@ -68,8 +59,7 @@
     box-shadow: 0 0 5px rgba(0, 255, 65, 0.4);
 }
 
-.writeButton:hover,
-.closeButton:hover {
+.dashboardBtn:hover {
     background-color: rgba(0, 255, 65, 0.2);
 }
 /* ==================================== */

@@ -78,7 +78,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                         <h2 className={'moduleTitle'}>[RECENT_POSTS]</h2>
 
                         <button
-                            className={'writeButton'}
+                            className={'dashboardBtn'}
                             onClick={() => {
                                 setIsMoreBtnClick(true);
                             }} // 클릭 이벤트 추가
@@ -134,9 +134,9 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                 <div className={'modalHeader'}>
                                     <h2 className="moduleTitle">[POSTS LIST]</h2>
                                     <div style={{ display: 'flex', gap: '10px' }}>
-                                        <button className={'closeButton writeButton'}>[ADD]</button>
+                                        <button className={'dashboardBtn'}>[ADD]</button>
 
-                                        <button className={'closeButton'} onClick={() => setIsMoreBtnClick(false)}>
+                                        <button className={'dashboardBtn'} onClick={() => setIsMoreBtnClick(false)}>
                                             [X]
                                         </button>
                                     </div>
