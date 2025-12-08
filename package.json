@@ -16,7 +16,7 @@
         "@tanstack/react-query": "^5.90.11",
         "gray-matter": "^4.0.3",
         "mongoose": "^9.0.0",
-        "next": "16.0.3",
+        "next": "^16.0.7",
         "next-auth": "^4.24.13",
         "prismjs": "^1.30.0",
         "react": "19.2.0",
@@ -29,12 +29,12 @@
         "remark-rehype": "^11.1.2"
     },
     "devDependencies": {
-        "@types/node": "^20",
+        "@types/node": "^20.19.25",
         "@types/react": "^19.2.7",
         "@types/react-dom": "^19",
         "baseline-browser-mapping": "^2.9.0",
-        "eslint": "^9",
+        "eslint": "^9.39.1",
         "eslint-config-next": "16.0.3",
-        "typescript": "^5"
+        "typescript": "^5.9.3"
     }
 }

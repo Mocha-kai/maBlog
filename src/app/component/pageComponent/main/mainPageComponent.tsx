@@ -45,7 +45,13 @@ const MainPageComponent = ({ data }: { data: IPostDocument[] }) => {
                     </p>
                 </section>
                 <div
-                    style={{ padding: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                    style={{
+                        padding: '10px',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        maxWidth: '1200px',
+                    }}
                 >
                     <h2
                         style={{
