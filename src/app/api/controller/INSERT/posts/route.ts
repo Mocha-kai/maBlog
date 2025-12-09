@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
             title: paramData.title,
             content: paramData.content,
             category: paramData.category,
-            date: paramData.date,
+            date: new Date(paramData.date),
             slug: paramData.slug,
         });
 
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
         console.error('--- MongoDB Connection Fatal Error End ---');
 
         return NextResponse.json(
-            { error: '데이터베이스 연결에 심각한 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.' },
+            { error: 'FATAL ERROR' },
             { status: 500 } // 500 Internal Server Error
         );
     }

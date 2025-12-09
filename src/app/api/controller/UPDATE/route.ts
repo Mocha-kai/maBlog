@@ -1,0 +1,31 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { ConnectMongoDB } from '@/app/api/ConnectMongoDB';
+import ModelPostsSetting, { IPostDocument } from '@/app/api/models/posts/model_posts';
+
+export async function POST(request: NextRequest) {
+    try {
+        await ConnectMongoDB();
+
+        const paramData: IPostDocument = await request.json();
+
+        const updatedPost = await ModelPostsSetting.findByIdAndUpdate(
+            paramData._id,
+            {
+                title: paramData.title,
+                content: paramData.content,
+                category: paramData.category,
+                date: new Date(),
+                slug: paramData.slug,
+            },
+            { new: true }
+        );
+        if (!updatedPost) return NextResponse.json({ error: '_id Check' }, { status: 404 });
+
+        return NextResponse.json(updatedPost, { status: 200 });
+    } catch (err) {
+        console.error('--- MongoDB Update Error ---');
+        console.error(err);
+
+        return NextResponse.json({ error: '업데이트 중 오류 발생' }, { status: 500 });
+    }
+}

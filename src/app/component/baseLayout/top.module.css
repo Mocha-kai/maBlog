@@ -1,5 +1,5 @@
 /* src/app/component/baselayout/top.module.css */
-.glassHeader {
+.topBody {
     height: 70px;
     position: sticky;
     top: 0;
@@ -12,9 +12,8 @@
     justify-content: center;
 }
 
-.headerInner {
-    width: 100%;
-    max-width: 1600px;
+.topContent {
+    width: 1200px;
     padding: 0 1.5rem;
     display: flex;
     justify-content: space-between;

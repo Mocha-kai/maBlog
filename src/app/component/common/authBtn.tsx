@@ -13,13 +13,13 @@ export default function AuthButton({ isLogin }: { isLogin: (check: boolean) => v
 
     if (session) {
         return (
-            <button onClick={() => signOut()} className="blog-login-btn">
+            <button onClick={() => signOut()} className="dashboardBtn">
                 Logout
             </button>
         );
     }
     return (
-        <button onClick={() => signIn('github')} className="blog-login-btn">
+        <button onClick={() => signIn('github')} className="dashboardBtn">
             Login(GiT)
         </button>
     );

@@ -14,9 +14,29 @@
     padding: 20px;
     box-sizing: border-box;
 }
+.modalBackdrop-mini {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 400px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.modalContent-mini {
+    background-color: #000;
+    border: 3px solid #00ff41;
+    padding: 10px;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.7);
+}
 
 .modalContent {
-    width: 100%;
+    width: 1200px;
     max-width: 95%;
     background-color: #000;
     border: 3px solid #00ff41;
@@ -26,8 +46,8 @@
 
 .modalHeader {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    width: 100%;
+    flex-direction: column;
     border-bottom: 2px solid #00ff41;
     padding-bottom: 10px;
     margin-bottom: 15px;

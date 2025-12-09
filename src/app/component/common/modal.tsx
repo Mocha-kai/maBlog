@@ -2,16 +2,21 @@
 
 import { ReactNode } from 'react';
 
-// ⭐️ 모달 컴포넌트 뼈대 (Terminal 스타일)
-const ModalBody = ({ setClick, html }: { setClick: (bool: boolean) => void; html: ReactNode }) => (
-    <div
-        className={'modalBackdrop'}
-        onClick={(e) => {
-            if (e.target === e.currentTarget) setClick(false);
-        }}
-    >
-        <div className={'modalContent'}>{html}</div>
-    </div>
-);
+type SizeType = 'mini' | 'normal';
+type PosType = {
+    x: number;
+    y: number;
+};
+const ModalBody = ({ html, size, pos }: { html: ReactNode; size: SizeType; pos?: PosType }) => {
+    return size === 'mini' ? (
+        <div className={'modalBackdrop-mini'} style={{ left: pos?.x, top: pos?.y }}>
+            <div className={'modalContent-mini'}>{html}</div>
+        </div>
+    ) : (
+        <div className={'modalBackdrop'}>
+            <div className={'modalContent'}>{html}</div>
+        </div>
+    );
+};
 
 export default ModalBody;

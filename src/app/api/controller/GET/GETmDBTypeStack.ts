@@ -3,7 +3,6 @@
 import { ConnectMongoDB } from '../../ConnectMongoDB'; // 상위 폴더의 DB 연결 함수 import
 import ModelStacksSetting, { IStackDocument } from '../../models/stacks/model_stacks';
 
-
 // 데이타 전부 가져오기
 export async function GetStackAllData(): Promise<IStackDocument[]> {
     const MONGO_URI = process.env.MONGO_URI;
@@ -15,10 +14,7 @@ export async function GetStackAllData(): Promise<IStackDocument[]> {
 
     try {
         await ConnectMongoDB();
-        
         const stacks = await ModelStacksSetting.find({}).lean();
-
-        console.log('stacks', stacks);
         return JSON.parse(JSON.stringify(stacks));
     } catch (error) {
         console.error('GetPostsAllData:', error);

@@ -57,34 +57,41 @@
 .label {
     display: block;
     font-weight: 700; /* 라벨 강조 */
-    color: #333; /* 라벨 색상 선명하게 */
+    color: #00ff41; /* 라벨 색상 선명하게 */
     margin-bottom: 6px; /* 라벨과 인풋 간격 줄임 */
-    font-size: 0.9rem;
+    font-size: 10px;
     letter-spacing: -0.5px;
 }
 
 .input,
 .select,
 .textarea {
-    box-sizing: border-box;
     width: 100%;
-    padding: 10px 12px; /* 패딩 조정 */
-    border: 1px solid #ddd; /* 테두리 연하게 */
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-family: inherit;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    background-color: #fcfcfc; /* 배경색 살짝 넣어 구분 */
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* 은은한 내부 그림자 */
+    background-color: #000000;
+    color: #33ff33;
+    font-family: 'VT323', 'Inconsolata', 'Courier New', monospace;
+    font-size: 1.1rem;
+    border: 1px solid #00ff00;
+    padding: 5px 10px;
+    box-shadow: 0 0 5px #00ff00, inset 0 0 5px #00ff00;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .input:focus,
 .select:focus,
 .textarea:focus {
-    border-color: #f7931e;
-    box-shadow: 0 0 0 1px #f7931e, inset 0 1px 3px rgba(0, 0, 0, 0.05); /* 포커스 시 테두리 및 그림자 강화 */
+    border-color: #66ff66;
+    box-shadow: 0 0 8px #66ff66, inset 0 0 8px #66ff66;
     outline: none;
-    background-color: #fff;
+}
+
+.textarea {
+    height: 530px;
+    font-size: 11px;
 }
 
 .select {
@@ -98,65 +105,21 @@
     background-size: 12px;
     padding-right: 30px; /* 화살표 공간 확보 */
 }
-
-.textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-/* ---------------------------------------------------- */
-/* --- 버튼 스타일 --- */
-/* ---------------------------------------------------- */
-
-.saveButton {
-    padding: 10px 20px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #fff;
-    background-color: #f7931e; /* 메인 브랜드 색상 */
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.saveButton:hover:not(:disabled) {
-    background-color: #e67e00;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.saveButton:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-    box-shadow: none;
-}
 .editorRow {
     display: flex;
     gap: 20px; /* 간격 */
     margin-top: 20px;
 }
 
-/* textarea */
-.textarea {
-    width: 50%;
-    min-height: 300px;
-    padding: 10px;
-    font-family: monospace;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    resize: vertical;
-}
-
 /* 미리보기 영역 */
 .preview {
-    width: 50%;
+    width: 100%;
     min-height: 300px;
-    padding: 10px;
-    border: 1px solid #ddd;
+    max-height: 850px;
+    padding: 20px;
+    border: 1px solid #66ff66;
     border-radius: 6px;
-    background-color: #f9f9f9;
+    background-color: #000000;
     overflow: auto;
+    font-size: 11px;
 }

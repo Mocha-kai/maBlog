@@ -2,9 +2,10 @@
 
 import 'prismjs/themes/prism-tomorrow.css';
 import { CurFormatKORDate } from '@/app/component/common/CurFormatKORDate';
-import { IPostDataWithHtml } from '@/app/api/controller/GET/GETmDBTypePosts';
+import { IPostDataWithHtml } from '@/app/api/models/posts/model_posts';
 
-const ListDetailComponent = ({ post }: { post: IPostDataWithHtml }) => {
+const ListDetailComponent = ({ post }: { post?: IPostDataWithHtml }) => {
+    if (!post) return 'No Posts Data';
     return (
         <article className="articleContainer">
             <header className="header">

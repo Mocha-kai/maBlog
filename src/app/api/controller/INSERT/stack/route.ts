@@ -2,21 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ConnectMongoDB } from '@/app/api/ConnectMongoDB';
 import ModelStacksSetting from '@/app/api/models/stacks/model_stacks';
 
-
 export async function POST(request: NextRequest) {
     try {
         await ConnectMongoDB();
 
         const paramData = await request.json();
-console.log('paramData ', paramData);
         const addStack = new ModelStacksSetting({
             stack: paramData.stack,
             color: paramData.color,
             slug: paramData.slug,
         });
-
         const dataSave = await addStack.save();
-        console.log('test ', NextResponse.json(dataSave, { status: 201 }));
         return NextResponse.json(dataSave, { status: 201 });
     } catch (dbError) {
         console.error('--- MongoDB Connection Fatal Error Start ---');

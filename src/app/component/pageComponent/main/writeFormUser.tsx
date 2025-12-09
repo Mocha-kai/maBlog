@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './writeForm.module.css';
+import { IStackDocument } from '@/app/api/models/stacks/model_stacks';
 
 type InputTagType = 'input' | 'TextArea';
 type InputType = {
@@ -7,16 +8,30 @@ type InputType = {
     name: string;
 };
 type FormDataKeys = 'stack' | 'slug' | 'color';
-const WriteFormStack = ({ inputList }: { inputList: InputType[] }) => {
+const WriteFormStack = ({
+    setIsOpen,
+    inputList,
+    setS_Data,
+}: {
+    setIsOpen: (bool: boolean) => void;
+    inputList: InputType[];
+    setS_Data: (data: IStackDocument[]) => void;
+}) => {
     const [formData, setFormData] = useState({
         stack: '',
         slug: '',
         color: '',
     });
 
-    const ChangeFormData = (value: string, target: FormDataKeys) => {
+    const ChangeFormData = (value: string, target: FormDataKeys) =>
         setFormData((prev) => ({ ...prev, [target]: value }));
+    //===
+    const RefreshData = async () => {
+        const res = await fetch('/api/controller/GET/stack');
+        const data: IStackDocument[] = await res.json();
+        setS_Data(data);
     };
+    //===
     const ClickSubmit = async () => {
         try {
             const response = await fetch('/api/controller/INSERT/stack', {
@@ -29,13 +44,21 @@ const WriteFormStack = ({ inputList }: { inputList: InputType[] }) => {
                 slug: '',
                 color: '',
             });
+
+            if (!response) return;
+            RefreshData();
         } catch (e) {
             console.log(e);
         }
     };
 
     return (
-        <form onSubmit={(e)=>{e.preventDefault(); ClickSubmit();}}>
+        <form
+            onSubmit={(e) => {
+                e.preventDefault();
+                ClickSubmit();
+            }}
+        >
             {inputList.map((v) => (
                 <div className={styles.inputGroup} key={v.name}>
                     <label className={styles.label} htmlFor="modal-title">
@@ -54,9 +77,12 @@ const WriteFormStack = ({ inputList }: { inputList: InputType[] }) => {
             ))}
 
             {/* 버튼 영역 */}
-            <div style={{ marginTop: '20px', textAlign: 'right' }}>
-                <button type="submit" className={styles.saveButton}>
+            <div style={{ display: 'flex', gap: '20px', justifyContent: 'flex-end' }}>
+                <button type="submit" className={'dashboardBtn'}>
                     Upload
+                </button>
+                <button type="submit" className={'dashboardBtn'} onClick={() => setIsOpen(false)}>
+                    [x]
                 </button>
             </div>
         </form>

@@ -1,34 +1,30 @@
 import { useEffect, useState } from 'react';
 import styles from './writeForm.module.css';
 import { ConvertMarkdownToHtml } from '../../MKdouwn/transMD';
-import { BaseInsertPostType, IPostDataWithHtml } from '@/app/api/models/posts/model_posts';
+import { IPostDataWithHtml } from '@/app/api/models/posts/model_posts';
 
-type InputTagType = 'input' | 'TextArea' | 'date';
+type InputTagType = 'input' | 'TextArea';
 type InputType = {
     type: InputTagType;
     name: string;
 };
-export type FormDataKeys = 'title' | 'content' | 'category' | 'slug';
+export type FormDataKeys = 'title' | 'content' | 'category';
 //====
-const WriteForm = ({
+const WriteFormFix = ({
     setIsOpen,
+    formData,
     category,
     inputList,
     setPData,
 }: {
     setIsOpen: (bool: boolean) => void;
+    formData: IPostDataWithHtml;
     category: string[];
     inputList: InputType[];
     setPData: (data: IPostDataWithHtml[]) => void;
 }) => {
-    const [previewHtml, setPreviewHtml] = useState<string>('');
-    const [formData, setFormData] = useState<BaseInsertPostType>({
-        title: '',
-        content: '',
-        category: category[0],
-        date: new Date(),
-        slug: '',
-    });
+    const [previewHtml, setPreviewHtml] = useState('');
+    const [updateData, setUpdateData] = useState<IPostDataWithHtml>(formData);
 
     useEffect(() => {
         //AbortController = 비동기 작업을 강제로 중단시키는 도구
@@ -36,7 +32,7 @@ const WriteForm = ({
 
         const convert = async () => {
             try {
-                const { contentHtml } = await ConvertMarkdownToHtml(formData.content);
+                const { contentHtml } = await ConvertMarkdownToHtml(updateData.content);
                 if (!controller.signal.aborted) {
                     setPreviewHtml(contentHtml || '');
                 }
@@ -50,10 +46,10 @@ const WriteForm = ({
 
         convert();
         return () => controller.abort();
-    }, [formData.content]);
+    }, [updateData.content]);
     //===
     const ChangeFormData = (value: string, target: FormDataKeys) => {
-        setFormData((prev) => ({ ...prev, [target]: value }));
+        setUpdateData((prev) => ({ ...prev, [target]: value }));
     };
     //===
     const PreViewMK = async (value: string) => {
@@ -70,28 +66,20 @@ const WriteForm = ({
     const ClickSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await fetch('/api/controller/INSERT/posts', {
+            // 💡 핵심: fetch를 사용하여 서버 API Route 호출
+            const response = await fetch('/api/controller/UPDATE', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(updateData), // 데이터를 JSON 형태로 전송
             });
-
             if (!response) return;
-
-            setFormData({
-                title: '',
-                content: '',
-                category: '',
-                date: new Date(),
-                slug: '',
-            });
-            //넣었으니 데이터 최신화 작업
             RefreshData();
         } catch (e) {
             console.log(e);
         }
     };
-    //===
+
+    if (!updateData) return;
     return (
         <section style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
             <form onSubmit={ClickSubmit} style={{ width: '600px', margin: '0 auto' }}>
@@ -103,7 +91,7 @@ const WriteForm = ({
                         className={styles.select}
                         id="modal-category"
                         name="category"
-                        value={formData.category}
+                        value={updateData.category}
                         onChange={(e) => {
                             ChangeFormData(e.target.value, 'category');
                         }}
@@ -128,7 +116,7 @@ const WriteForm = ({
                                 id="modal-title"
                                 name="title"
                                 type="text"
-                                value={formData[v.name as FormDataKeys].toString()}
+                                value={updateData[v.name as FormDataKeys]}
                                 onChange={(e) => ChangeFormData(e.target.value, v.name as FormDataKeys)}
                                 required
                             />
@@ -143,7 +131,7 @@ const WriteForm = ({
                                     className={styles.textarea}
                                     id="modal-content"
                                     name="content"
-                                    value={formData[v.name as FormDataKeys]}
+                                    value={updateData[v.name as FormDataKeys]}
                                     onChange={(e) => {
                                         ChangeFormData(e.target.value, v.name as FormDataKeys);
                                         PreViewMK(e.target.value);
@@ -159,7 +147,7 @@ const WriteForm = ({
                 {/* 버튼 영역 */}
                 <div style={{ display: 'flex', gap: '20px', justifyContent: 'flex-end' }}>
                     <button type="submit" className={'dashboardBtn'}>
-                        Upload
+                        Update
                     </button>
                     <button type="submit" className={'dashboardBtn'} onClick={() => setIsOpen(false)}>
                         [x]
@@ -171,4 +159,4 @@ const WriteForm = ({
     );
 };
 
-export default WriteForm;
+export default WriteFormFix;

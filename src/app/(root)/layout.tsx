@@ -2,7 +2,6 @@
 import AuthProviderWrapper from '../component/authProvider/authProviderWrapper';
 //===
 import TopLayout from '../component/baseLayout/top';
-import FooterLayout from '../component/baseLayout/bottom';
 //===
 import '../../app/globals.css';
 import '@/app/css/list/listDetail.css';
@@ -21,8 +20,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <TopLayout />
                     {/* main */}
                     <main style={{ flex: 1 }}>{children}</main>
-                    {/* bottom */}
-                    {/* <FooterLayout /> */}
                 </AuthProviderWrapper>
             </body>
         </html>

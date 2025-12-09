@@ -1,47 +1,45 @@
 'use client';
 //===
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 //===
 import { IStackDocument } from '@/app/api/models/stacks/model_stacks';
 //===
 import AboutMe from '@/app/component/pageComponent/main/aboutMe';
-import PostCard from '../../card/card';
 import WriteForm from './writeForm';
 import AuthButton from '@/app/component/common/authBtn';
 import ModalBody from '../../common/modal';
 import MakePage from '../../common/makePage';
 import { CurFormatKORDate } from '../../common/CurFormatKORDate';
 import ListDetailComponent from '../list/listDetail';
-import { IPostDataWithHtml } from '@/app/api/controller/GET/GETmDBTypePosts';
+import WriteFormFix from './writeFormFix';
+import { IPostDataWithHtml } from '@/app/api/models/posts/model_posts';
 
 //===
 const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtml[]; stackData: IStackDocument[] }) => {
     //===
     const [isMoreBtnClick, setIsMoreBtnClick] = useState<boolean>(false);
     const [isRecentBtnClick, setIsRecentBtnClick] = useState<boolean>(false);
-
+    const [isAddClick, setIsAddBtnClick] = useState<boolean>(false);
+    const [isFixClick, setIsFixClick] = useState<boolean>(false);
+    //===
     const [isLogin, setIsLogin] = useState<boolean>(false);
     //===
     const [p_data, setP_Data] = useState<IPostDataWithHtml[]>(postData);
-    const [s_data, setS_Data] = useState<IStackDocument[]>([]);
+    const [s_data, setS_Data] = useState<IStackDocument[]>(stackData);
+
     //===
-    const [detail, setDetailData] = useState<IPostDataWithHtml>({
-        category: '',
-        content: '',
-        contentHtml: '',
-        date: new Date(),
-        slug: '',
-        title: '',
-    });
+    const [detail, setDetailData] = useState<IPostDataWithHtml>();
     //===
     //데이터 초기화
     //===
-
+    useEffect(() => {
+        setP_Data(postData);
+    }, [postData]);
     //===
     //페이지네이션
     const [curPage, setCurPage] = useState<number>(1);
 
-    const postsPerPage = 8;
+    const postsPerPage = 7;
     const totalPages = Math.ceil(p_data.length / postsPerPage);
 
     const indexOfLastPost = curPage * postsPerPage; // 마지막 인덱스 (예: 1페이지 * 5 = 5)
@@ -49,133 +47,276 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
 
     const currentPosts = p_data.slice(indexOfFirstPost, indexOfLastPost);
     const recentPosts = currentPosts.slice(0, 5);
+
+    //===
+    const DeletePost = async (id: string) => {
+        await fetch('/api/controller/DELETE/posts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id }),
+        });
+    };
     //===
     return (
         <div className="dashboardContainer">
-            {/* 1. 상단 제목 */}
             <header className="dashboardHeader">
                 <h1 className="dashboardTitle">DEV.LOG // SYSTEM STATUS</h1>
+                {/* ======================= */}
+                {/* AuthButton: Git 로그인 */}
+                {/* ======================= */}
+                <AuthButton isLogin={setIsLogin} />
             </header>
-
-            {/* 2. 메인 그리드 영역 (모니터링 & 최신 로그) */}
+            {/* ======================= */}
+            {/* 기본적인 자기소개*/}
+            {/* ======================= */}
+            <div className="" style={{ padding: '20px' }}>
+                <AboutMe isLogin={isLogin} stackData={s_data} />
+            </div>
             <div className="dashboardGrid">
-                {/* A. SYSTEM_STATUS 모듈 (좌상단) */}
+                {/* ======================= */}
+                {/* SYSTEM_STATUS */}
+                {/* ======================= */}
                 <div className="gridItem">
                     <h2 className="moduleTitle">[SYSTEM_STATUS]</h2>
-                    {/* CPU, RAM 게이지가 들어갈 자리 */}
                     <div className="chartPlaceholder">CPU: [[||||||]] 70%</div>
                 </div>
-
-                {/* C. DOCKER_CONTAINERS (좌하단) */}
+                {/* ======================= */}
+                {/* DOCKER_CONTAINERS*/}
+                {/* ======================= */}
                 <div className="gridItem">
                     <h2 className="moduleTitle">[DOCKER_CONTAINERS]</h2>
-                    {/* 컨테이너 리스트가 들어갈 자리 */}
                 </div>
-
+                {/* ======================= */}
+                {/* RECENT_POSTS*/}
+                {/* ======================= */}
                 <div className={'gridItem'}>
                     <div className={'moduleHeader'}>
-                        {/* 버튼 추가를 위한 새 div */}
                         <h2 className={'moduleTitle'}>[RECENT_POSTS]</h2>
 
                         <button
                             className={'dashboardBtn'}
                             onClick={() => {
                                 setIsMoreBtnClick(true);
-                            }} // 클릭 이벤트 추가
+                            }}
                         >
-                            [more list...]
+                            [more]
                         </button>
                     </div>
 
-                    {/* 최근 포스팅*/}
-                    <div className={'logContent'}>
-                        {recentPosts.map((v) => (
-                            <div
-                                key={v.slug.toString()}
-                                onClick={() => {
-                                    setDetailData(v);
-                                    setIsRecentBtnClick(true);
-                                }}
-                            >
-                                <div className="logPlaceholder">{v.title}</div>
-                            </div>
-                        ))}
-                    </div>
+                    {recentPosts.map((v) => (
+                        <div
+                            className="logPlaceholder"
+                            key={v.slug.toString()}
+                            onClick={() => {
+                                setDetailData(v);
+                                setIsRecentBtnClick(true);
+                            }}
+                        >
+                            {v.title}
+                        </div>
+                    ))}
                 </div>
-                {/* 명령 프롬프트 (가장 하단) */}
-                <div className="promptArea">user@my-dev-blog:_</div>
             </div>
-
-            {isRecentBtnClick && (
+            {/* ======================= */}
+            {/* More -> ADD 버튼 눌렀을 때 */}
+            {/* ======================= */}
+            {isAddClick && (
                 <ModalBody
-                    setClick={setIsRecentBtnClick}
+                    size="normal"
                     html={
-                        <>
-                            <ListDetailComponent post={detail} />
-
-                            <button
-                                className={'closeButton'}
-                                onClick={() => {
-                                    setIsRecentBtnClick(false);
-                                }}
-                            >
-                                [X]
-                            </button>
-                        </>
+                        <div className={'modalHeader'}>
+                            <h2 className="moduleTitle">[ADD Form]</h2>
+                            <WriteForm
+                                category={['hobby', 'error', 'study']}
+                                inputList={[
+                                    { name: 'title', type: 'input' },
+                                    { name: 'content', type: 'TextArea' },
+                                    { name: 'date', type: 'input' },
+                                    { name: 'slug', type: 'input' },
+                                ]}
+                                key={'ADD'}
+                                setIsOpen={setIsAddBtnClick}
+                                setPData={setP_Data}
+                            />
+                        </div>
                     }
                 />
             )}
-            {isMoreBtnClick && (
-                <>
-                    <ModalBody
-                        setClick={setIsMoreBtnClick}
-                        html={
-                            <>
-                                <div className={'modalHeader'}>
-                                    <h2 className="moduleTitle">[POSTS LIST]</h2>
-                                    <div style={{ display: 'flex', gap: '10px' }}>
-                                        <button className={'dashboardBtn'}>[ADD]</button>
+            {/* ======================= */}
+            {/* 최근 게시물 하나 눌렀을 때 */}
+            {/* ======================= */}
+            {isRecentBtnClick && (
+                <ModalBody
+                    size="normal"
+                    html={
+                        <div className={'modalHeader'}>
+                            <h2 className="moduleTitle">[Recent Detail]</h2>
+                            <ListDetailComponent post={detail} />
 
-                                        <button className={'dashboardBtn'} onClick={() => setIsMoreBtnClick(false)}>
-                                            [X]
-                                        </button>
-                                    </div>
+                            <div style={{ display: 'flex', gap: '20px', justifyContent: 'flex-end' }}>
+                                {/* ======================= */}
+                                {/* DELETE */}
+                                {/* ======================= */}
+                                <button
+                                    className={'dashboardBtn'}
+                                    onClick={() => {
+                                        if (detail) DeletePost(detail._id.toString());
+                                    }}
+                                >
+                                    [DELETE]
+                                </button>
+                                {/* ======================= */}
+                                {/* FIX */}
+                                {/* ======================= */}
+                                <button
+                                    className={'dashboardBtn'}
+                                    onClick={() => {
+                                        setIsFixClick(true);
+                                    }}
+                                >
+                                    [FIX]
+                                </button>
+                                <button
+                                    className={'dashboardBtn'}
+                                    onClick={() => {
+                                        setIsRecentBtnClick(false);
+                                        setDetailData(undefined);
+                                    }}
+                                >
+                                    [X]
+                                </button>
+                            </div>
+                        </div>
+                    }
+                />
+            )}
+            {/* ======================= */}
+            {/* FIX  버튼 눌렀을 때*/}
+            {/* ======================= */}
+            {isFixClick && detail && (
+                <ModalBody
+                    size="normal"
+                    html={
+                        <div className={'modalHeader'}>
+                            <h2 className="moduleTitle">[Fix Form]</h2>
+                            <WriteFormFix
+                                setPData={setP_Data}
+                                setIsOpen={setIsFixClick}
+                                formData={detail}
+                                category={['hobby', 'error', 'study']}
+                                inputList={[
+                                    { name: 'title', type: 'input' },
+                                    { name: 'content', type: 'TextArea' },
+                                ]}
+                            />
+                        </div>
+                    }
+                />
+            )}
+
+            {/* ======================= */}
+            {/* More 버튼 눌렀을 때 */}
+            {/* ======================= */}
+            {isMoreBtnClick && (
+                <ModalBody
+                    size="normal"
+                    html={
+                        <>
+                            <div className={'modalHeader'}>
+                                <h2 className="moduleTitle">[POSTS LIST]</h2>
+                                <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+                                    {isLogin && (
+                                        <>
+                                            {/* ======================= */}
+                                            {/* DELETE */}
+                                            {/* ======================= */}
+                                            <button
+                                                className={'dashboardBtn'}
+                                                onClick={() => {
+                                                    if (detail) DeletePost(detail._id.toString());
+                                                }}
+                                            >
+                                                [DELETE]
+                                            </button>
+                                            {/* ======================= */}
+                                            {/* FIX */}
+                                            {/* ======================= */}
+                                            <button
+                                                className={'dashboardBtn'}
+                                                onClick={() => {
+                                                    setIsFixClick(true);
+                                                    //===
+                                                    setIsMoreBtnClick(false);
+                                                }}
+                                            >
+                                                [FIX]
+                                            </button>
+                                            {/* ======================= */}
+                                            {/* ADD */}
+                                            {/* ======================= */}
+                                            <button
+                                                className={'dashboardBtn'}
+                                                onClick={() => {
+                                                    setIsAddBtnClick(true);
+                                                    //===
+                                                    setIsMoreBtnClick(false);
+                                                    setIsFixClick(false);
+                                                }}
+                                            >
+                                                [ADD]
+                                            </button>
+                                        </>
+                                    )}
+                                    <button
+                                        className={'dashboardBtn'}
+                                        onClick={() => {
+                                            setIsMoreBtnClick(false);
+                                            setIsFixClick(false);
+                                            setIsMoreBtnClick(false);
+                                            setIsAddBtnClick(false);
+                                            setDetailData(undefined);
+                                        }}
+                                    >
+                                        [X]
+                                    </button>
                                 </div>
-                                <div className={'logList'}>
-                                    <div className="logListLeft">
-                                        <div className="LeftContent">
-                                            {currentPosts.map((v) => (
-                                                <div
-                                                    className="logPlaceholderCard"
-                                                    key={v.slug.toString()}
-                                                    onClick={() => {
-                                                        setDetailData(v);
-                                                    }}
-                                                >
-                                                    <div>{v.category}</div>
-                                                    <div style={{ marginLeft: '30px', marginTop: 15 }}>{v.title}</div>
-                                                    <div style={{ textAlign: 'right' }}>
-                                                        {CurFormatKORDate(v.date.toString())}
-                                                    </div>
+                            </div>
+                            <div className={'logList'}>
+                                <div className="logListLeft">
+                                    <div className="LeftContent">
+                                        {currentPosts.map((v) => (
+                                            <div
+                                                className="logPlaceholderCard"
+                                                key={v.slug.toString()}
+                                                onClick={() => {
+                                                    setDetailData(v);
+                                                }}
+                                            >
+                                                <div>{v.category}</div>
+                                                <div style={{ marginLeft: '15px', marginTop: 15, fontSize: '12px' }}>
+                                                    {v.title}
                                                 </div>
-                                            ))}
-                                        </div>
-                                        {p_data.length > 0 && (
-                                            <MakePage
-                                                totalPages={totalPages}
-                                                currentPage={curPage}
-                                                onPageChange={setCurPage}
-                                            />
-                                        )}
+                                                <div style={{ textAlign: 'right' }}>
+                                                    {CurFormatKORDate(v.date.toString())}
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
-                                    <div className="logListRight">
-                                        <ListDetailComponent post={detail} />
-                                    </div>
+                                    {p_data.length > 0 && (
+                                        <MakePage
+                                            totalPages={totalPages}
+                                            currentPage={curPage}
+                                            onPageChange={setCurPage}
+                                        />
+                                    )}
                                 </div>
-                            </>
-                        }
-                    />
-                </>
+                                <div className="logListRight">
+                                    <ListDetailComponent post={detail} />
+                                </div>
+                            </div>
+                        </>
+                    }
+                />
             )}
         </div>
     );
