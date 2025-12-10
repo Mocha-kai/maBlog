@@ -89,6 +89,19 @@
 /* ==================================== */
 /* 반응형 (모바일) */
 @media (max-width: 768px) {
+    .modalBackdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.95);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        padding: 20px;
+        box-sizing: border-box;
+    }
     .monitorGrid {
         display: flex;
         flex-direction: column;
@@ -97,6 +110,6 @@
 
     .modalContent {
         width: 300px;
-        height: 90%;
+        height: 100%;
     }
 }

@@ -10,6 +10,7 @@ import MainPageComponent from '../component/pageComponent/main/mainPageComponent
 const MainPage = async () => {
     let postsInfo: IPostDataWithHtml[] = [];
     let stackInfo: IStackDocument[] = [];
+
     try {
         postsInfo = await GetPostsAllData();
         stackInfo = await GetStackAllData();

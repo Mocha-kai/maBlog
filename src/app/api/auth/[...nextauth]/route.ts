@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
+import { env } from 'process';
 
 const handler = NextAuth({
     providers: [
@@ -9,15 +10,15 @@ const handler = NextAuth({
         }),
     ],
     pages: {
-        error: '/', // 내가 아닐떄는 그냥 원래대로
+        error: '/',
     },
     callbacks: {
         async signIn({ user, profile }) {
-            const myEmail = 'kai@mocha-company.com';
-            // GitHub는 이메일이 null일 수 있음.
+            const myEmail = env.GIT_EMAIL;
+
             const email = user?.email || profile?.email || null;
 
-            if (!email) return false; // 이메일 없는 계정 로그인 차단
+            if (!email) return false;
 
             return email === myEmail;
         },

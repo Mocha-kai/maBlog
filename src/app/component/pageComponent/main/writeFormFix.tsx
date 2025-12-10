@@ -16,12 +16,14 @@ const WriteFormFix = ({
     category,
     inputList,
     setPData,
+    setDetailData,
 }: {
     setIsOpen: (bool: boolean) => void;
     formData: IPostDataWithHtml;
     category: string[];
     inputList: InputType[];
     setPData: (data: IPostDataWithHtml[]) => void;
+    setDetailData: (data: IPostDataWithHtml) => void;
 }) => {
     const [previewHtml, setPreviewHtml] = useState('');
     const [updateData, setUpdateData] = useState<IPostDataWithHtml>(formData);
@@ -61,6 +63,10 @@ const WriteFormFix = ({
         const res = await fetch('/api/controller/GET/posts');
         const data: IPostDataWithHtml[] = await res.json();
         setPData(data);
+
+        data.map((v) => {
+            if (v._id === updateData._id) setDetailData(v);
+        });
     };
     //===
     const ClickSubmit = async (e: React.FormEvent) => {
@@ -74,6 +80,7 @@ const WriteFormFix = ({
             });
             if (!response) return;
             RefreshData();
+            setIsOpen(false);
         } catch (e) {
             console.log(e);
         }

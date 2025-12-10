@@ -1,51 +1,99 @@
 'use client';
 
-import { useState } from 'react';
-import WriteFormStack from './writeFormUser';
+import { useEffect, useState } from 'react';
 import { IStackDocument } from '@/app/api/models/stacks/model_stacks';
+import WriteFormStack from './writeFormUser';
 import ModalBody from '../../common/modal';
+import Bubble from '../../common/bubble';
 
 const AboutMe = ({ isLogin, stackData }: { isLogin: boolean; stackData: IStackDocument[] }) => {
-    const [data, setData] = useState<IStackDocument[]>(stackData);
-    const [isClick, setIsClick] = useState<boolean>(false);
     const [pos, setPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+    const [data, setData] = useState<IStackDocument[]>(stackData);
+    const [getId, setGetId] = useState<string>('');
+    //
+    const [isAddBtn, setIsAddBtn] = useState<boolean>(false);
+    const [isDeleteModal, setIsDeleteModal] = useState<boolean>(false);
+    const [isDelete, setIsDelete] = useState<boolean>(false);
+    //===
+    useEffect(() => {
+        const RefreshStackData = async () => {
+            const res = await fetch('/api/controller/GET/stack');
+            const data: IStackDocument[] = await res.json();
+            setData(data);
+        };
+
+        const DeleteStack = async ({ id }: { id: string }) => {
+            await fetch('/api/controller/DELETE/stack', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id }),
+            });
+            RefreshStackData();
+            setIsDeleteModal(false);
+            setIsDelete(false);
+        };
+        if (isDelete) DeleteStack({ id: getId });
+    }, [getId, isDelete]);
 
     if (!data) return;
+
     return (
         <section className="devBody">
             <h3 className="devTitle" style={{ display: 'flex', gap: '20px' }}>
                 Ma_Dev
+                {/* ============== */}
+                {/* 로그인 해야지 보이는 버튼 */}
+                {/* ============== */}
                 {isLogin && (
                     <button
-                        className="dashboardBtn"
+                        className="dashboardBtn writeBtn"
                         title="p_btn"
                         onClick={(e) => {
-                            setIsClick(!isClick);
-                            setPos({ x: e.clientX - 15, y: e.clientY + 30 });
+                            setIsAddBtn(!isAddBtn);
+                            setPos({ x: e.clientX, y: e.clientY + 30 });
+                            setIsDeleteModal(false);
+                            setIsDelete(Boolean);
                         }}
                     >
                         +
                     </button>
                 )}
             </h3>
-            <p className="devMsg">평범한 개발자입니다.</p>
+            <p className="devMsg">아직은 부족한 개발자입니다.</p>
 
             <div className="tech-stack-container">
                 {data.map((v) => (
-                    <span className="stack-badge" style={{ backgroundColor: v.color }} key={v.slug}>
+                    <button
+                        className="stack-badge"
+                        style={{ backgroundColor: v.color }}
+                        key={v.slug}
+                        onClick={(e) => {
+                            setIsDeleteModal(true);
+                            setGetId(v._id.toString());
+                            setPos({ x: e.clientX, y: e.clientY });
+                        }}
+                    >
                         {v.stack}
-                    </span>
+                    </button>
                 ))}
             </div>
-
-            {isClick && (
+            {/* ============== */}
+            {/* 말풍선 */}
+            {/* ============== */}
+            {isDeleteModal && (
+                <Bubble setDelete={setIsDelete} isOpen={setIsDeleteModal} pos={{ x: pos.x + 20, y: pos.y - 80 }} />
+            )}
+            {/* ============== */}
+            {/* 추가버튼 */}
+            {/* ============== */}
+            {isAddBtn && (
                 <ModalBody
                     pos={pos}
                     size="mini"
                     html={
                         <WriteFormStack
                             setS_Data={setData}
-                            setIsOpen={setIsClick}
+                            setIsOpen={setIsAddBtn}
                             inputList={[
                                 { name: 'stack', type: 'input' },
                                 { name: 'color', type: 'input' },

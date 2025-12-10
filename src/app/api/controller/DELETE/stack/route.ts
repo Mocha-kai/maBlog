@@ -1,5 +1,5 @@
 import { ConnectMongoDB } from '@/app/api/ConnectMongoDB';
-import ModelPostsSetting from '@/app/api/models/posts/model_posts';
+import ModelStacksSetting from '@/app/api/models/stacks/model_stacks';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
@@ -9,7 +9,7 @@ export async function POST(request: Request) {
 
         if (!id) return NextResponse.json({ error: 'ID is required' }, { status: 400 });
 
-        const result = await ModelPostsSetting.findByIdAndDelete(id);
+        const result = await ModelStacksSetting.findByIdAndDelete(id);
 
         return NextResponse.json({ success: true, deleted: result });
     } catch (e) {

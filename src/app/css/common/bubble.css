@@ -1,0 +1,29 @@
+.speech-bubble {
+    position: absolute; /* 트리거 버튼 근처에 위치 */
+    width: 250px;
+    padding: 15px;
+    background-color: #000000;
+    border: 2px solid #00ff00;
+    color: #00ff00;
+    box-shadow: 0 0 8px #00ff00; /* 네온 그림자 */
+    /* 픽셀화된 테두리처럼 보이게 할 수도 있습니다. */
+}
+
+.bubble-tail {
+    color: azure;
+    background-color: #00ff00;
+}
+
+/* 스캔라인 효과를 위한 의사 요소 */
+.speech-bubble::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* 가로 줄무늬를 반복해서 스캔라인처럼 만듭니다. */
+    background: repeating-linear-gradient(#000000, #000000 1px, rgba(0, 255, 0, 0.1) 1px, rgba(0, 255, 0, 0.1) 2px);
+    opacity: 0.5; /* 효과 강도 조절 */
+    pointer-events: none; /* 클릭 방지 */
+}

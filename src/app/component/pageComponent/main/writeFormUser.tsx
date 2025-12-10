@@ -30,6 +30,7 @@ const WriteFormStack = ({
         const res = await fetch('/api/controller/GET/stack');
         const data: IStackDocument[] = await res.json();
         setS_Data(data);
+        setIsOpen(false);
     };
     //===
     const ClickSubmit = async () => {

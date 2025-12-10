@@ -24,6 +24,7 @@ body::before {
     background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.4) 1px, rgba(0, 0, 0, 0) 2px);
     background-size: 100% 4px;
 }
+
 /* ==================================== */
 /* 스크롤바 스타일 */
 ::-webkit-scrollbar {
@@ -71,30 +72,6 @@ h6 {
     line-height: 1.3;
 }
 
-/* 화면 노이즈/글리치 (Flicker) 효과 */
-@keyframes flicker {
-    0% {
-        opacity: 0.98; /* 기존 0.9 */
-    }
-    5% {
-        opacity: 0.95; /* 기존 0.6 */
-    }
-    10% {
-        opacity: 0.97; /* 기존 0.8 */
-    }
-    20% {
-        opacity: 0.98;
-    }
-    25% {
-        opacity: 0.96; /* 기존 0.7 */
-    }
-    30% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 1;
-    }
-}
 @keyframes textGlow {
     0% {
         text-shadow: 0 0 4px #00ff00;
@@ -104,5 +81,11 @@ h6 {
     }
     100% {
         text-shadow: 0 0 4px #00ff00;
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        height: 100%;
     }
 }

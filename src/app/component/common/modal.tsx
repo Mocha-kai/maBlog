@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
+import Portal from './portal';
 
 type SizeType = 'mini' | 'normal';
 type PosType = {
@@ -13,9 +14,11 @@ const ModalBody = ({ html, size, pos }: { html: ReactNode; size: SizeType; pos?:
             <div className={'modalContent-mini'}>{html}</div>
         </div>
     ) : (
-        <div className={'modalBackdrop'}>
-            <div className={'modalContent'}>{html}</div>
-        </div>
+        <Portal selector="#modal-root">
+            <div className={'modalBackdrop'}>
+                <div className={'modalContent'}>{html}</div>
+            </div>
+        </Portal>
     );
 };
 

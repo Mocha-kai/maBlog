@@ -87,6 +87,7 @@ const WriteForm = ({
             });
             //넣었으니 데이터 최신화 작업
             RefreshData();
+            setIsOpen(false);
         } catch (e) {
             console.log(e);
         }

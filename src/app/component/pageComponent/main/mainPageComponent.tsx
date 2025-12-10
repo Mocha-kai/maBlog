@@ -13,6 +13,7 @@ import { CurFormatKORDate } from '../../common/CurFormatKORDate';
 import ListDetailComponent from '../list/listDetail';
 import WriteFormFix from './writeFormFix';
 import { IPostDataWithHtml } from '@/app/api/models/posts/model_posts';
+import { useMediaQuery } from '@mui/material';
 
 //===
 const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtml[]; stackData: IStackDocument[] }) => {
@@ -25,7 +26,6 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
     const [isLogin, setIsLogin] = useState<boolean>(false);
     //===
     const [p_data, setP_Data] = useState<IPostDataWithHtml[]>(postData);
-    const [s_data, setS_Data] = useState<IStackDocument[]>(stackData);
 
     //===
     const [detail, setDetailData] = useState<IPostDataWithHtml>();
@@ -36,25 +36,40 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
         setP_Data(postData);
     }, [postData]);
     //===
+    const isMobile = useMediaQuery('(max-width: 768px)');
     //페이지네이션
     const [curPage, setCurPage] = useState<number>(1);
 
-    const postsPerPage = 7;
+    const postsPerPage = isMobile ? 1 : 7;
     const totalPages = Math.ceil(p_data.length / postsPerPage);
 
     const indexOfLastPost = curPage * postsPerPage; // 마지막 인덱스 (예: 1페이지 * 5 = 5)
     const indexOfFirstPost = indexOfLastPost - postsPerPage; // 시작 인덱스 (예: 5 - 5 = 0)
 
     const currentPosts = p_data.slice(indexOfFirstPost, indexOfLastPost);
-    const recentPosts = currentPosts.slice(0, 5);
-
+    const recentPosts = p_data.slice(0, 5);
+    //===
+    //데이터 삭제, 수정에 따른 새로고침 용
+    const RefreshPostData = async () => {
+        const res = await fetch('/api/controller/GET/posts');
+        const data: IPostDataWithHtml[] = await res.json();
+        setP_Data(data);
+    };
     //===
     const DeletePost = async (id: string) => {
-        await fetch('/api/controller/DELETE/posts', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id }),
-        });
+        const check = confirm('real?');
+
+        if (check) {
+            await fetch('/api/controller/DELETE/posts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id }),
+            });
+
+            RefreshPostData();
+            setIsRecentBtnClick(false);
+            setDetailData(undefined);
+        } else return;
     };
     //===
     return (
@@ -70,7 +85,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
             {/* 기본적인 자기소개*/}
             {/* ======================= */}
             <div className="" style={{ padding: '20px' }}>
-                <AboutMe isLogin={isLogin} stackData={s_data} />
+                <AboutMe isLogin={isLogin} stackData={stackData} />
             </div>
             <div className="dashboardGrid">
                 {/* ======================= */}
@@ -158,7 +173,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                 {/* DELETE */}
                                 {/* ======================= */}
                                 <button
-                                    className={'dashboardBtn'}
+                                    className={'dashboardBtn writeBtn'}
                                     onClick={() => {
                                         if (detail) DeletePost(detail._id.toString());
                                     }}
@@ -169,7 +184,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                 {/* FIX */}
                                 {/* ======================= */}
                                 <button
-                                    className={'dashboardBtn'}
+                                    className={'dashboardBtn writeBtn'}
                                     onClick={() => {
                                         setIsFixClick(true);
                                     }}
@@ -201,6 +216,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                             <h2 className="moduleTitle">[Fix Form]</h2>
                             <WriteFormFix
                                 setPData={setP_Data}
+                                setDetailData={setDetailData}
                                 setIsOpen={setIsFixClick}
                                 formData={detail}
                                 category={['hobby', 'error', 'study']}
@@ -231,9 +247,10 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                             {/* DELETE */}
                                             {/* ======================= */}
                                             <button
-                                                className={'dashboardBtn'}
+                                                className={'dashboardBtn writeBtn'}
                                                 onClick={() => {
                                                     if (detail) DeletePost(detail._id.toString());
+                                                    setDetailData(undefined);
                                                 }}
                                             >
                                                 [DELETE]
@@ -242,11 +259,9 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                             {/* FIX */}
                                             {/* ======================= */}
                                             <button
-                                                className={'dashboardBtn'}
+                                                className={'dashboardBtn writeBtn'}
                                                 onClick={() => {
                                                     setIsFixClick(true);
-                                                    //===
-                                                    setIsMoreBtnClick(false);
                                                 }}
                                             >
                                                 [FIX]
@@ -255,18 +270,19 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                             {/* ADD */}
                                             {/* ======================= */}
                                             <button
-                                                className={'dashboardBtn'}
+                                                className={'dashboardBtn writeBtn'}
                                                 onClick={() => {
                                                     setIsAddBtnClick(true);
-                                                    //===
-                                                    setIsMoreBtnClick(false);
-                                                    setIsFixClick(false);
+                                                    setDetailData(undefined);
                                                 }}
                                             >
                                                 [ADD]
                                             </button>
                                         </>
                                     )}
+                                    {/* ======================= */}
+                                    {/* All exit */}
+                                    {/* ======================= */}
                                     <button
                                         className={'dashboardBtn'}
                                         onClick={() => {
@@ -292,11 +308,14 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                                     setDetailData(v);
                                                 }}
                                             >
-                                                <div>{v.category}</div>
-                                                <div style={{ marginLeft: '15px', marginTop: 15, fontSize: '12px' }}>
+                                                <div className="logPlaceholderCard_category">{v.category}</div>
+                                                <div
+                                                    className="logPlaceholderCard_title"
+                                                    style={{ marginLeft: '15px', marginTop: 15, fontSize: '12px' }}
+                                                >
                                                     {v.title}
                                                 </div>
-                                                <div style={{ textAlign: 'right' }}>
+                                                <div className="logPlaceholderCard_date" style={{ textAlign: 'right' }}>
                                                     {CurFormatKORDate(v.date.toString())}
                                                 </div>
                                             </div>

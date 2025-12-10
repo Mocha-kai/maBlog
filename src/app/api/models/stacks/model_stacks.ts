@@ -1,6 +1,6 @@
-import mongoose, { Schema, model, models, Document } from 'mongoose';
+import mongoose, { Schema, model, Document } from 'mongoose';
 
-export interface BaseInsertStackType  {
+export interface BaseInsertStackType {
     stack: string;
     color: string;
     slug: string;
@@ -13,7 +13,7 @@ export interface IStackDocument extends BaseInsertStackType, Document {}
 const stackSchema = new Schema<IStackDocument>(
     {
         stack: { type: String, required: true, trim: true },
-        color: { type: String, required: true, },
+        color: { type: String, required: true },
         slug: { type: String, required: true, unique: true },
     },
     {
