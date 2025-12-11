@@ -37,22 +37,10 @@
     font-weight: 600;
     color: #333;
 }
-@media (max-width: 600px) {
-    .editorContainer {
-        padding: 20px 15px;
-    }
-    .editorTitle {
-        font-size: 1.8rem;
-    }
-}
 
 /* ---------------------------------------------------- */
 /* --- 폼 필드 스타일 (WriteForm에 주로 사용됨) --- */
 /* ---------------------------------------------------- */
-
-.inputGroup {
-    margin-bottom: 18px; /* 필드 간격 조정 */
-}
 
 .label {
     display: block;
@@ -90,12 +78,12 @@
 }
 
 .textarea {
-    height: 530px;
+    height: 40vh;
+    max-height: 400px;
     font-size: 11px;
 }
 
 .select {
-    /* select 화살표 커스터마이징 */
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -108,18 +96,29 @@
 .editorRow {
     display: flex;
     gap: 20px; /* 간격 */
-    margin-top: 20px;
 }
-
+.inputGroup {
+    margin-top: 4px;
+}
 /* 미리보기 영역 */
 .preview {
     width: 100%;
-    min-height: 300px;
-    max-height: 850px;
+    height: 70vh;
+    min-height: 500px;
+    max-height: 660px;
     padding: 20px;
     border: 1px solid #66ff66;
     border-radius: 6px;
     background-color: #000000;
     overflow: auto;
     font-size: 11px;
+    box-sizing: border-box;
+}
+@media (max-width: 600px) {
+    .editorContainer {
+        padding: 20px 15px;
+    }
+    .editorTitle {
+        font-size: 1.8rem;
+    }
 }

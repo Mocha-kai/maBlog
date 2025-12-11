@@ -95,28 +95,26 @@ const WriteForm = ({
     //===
     return (
         <section style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-            <form onSubmit={ClickSubmit} style={{ width: '600px', margin: '0 auto' }}>
-                <div className={styles.inputGroup}>
-                    <label className={styles.label} htmlFor="modal-category">
-                        category
-                    </label>
-                    <select
-                        className={styles.select}
-                        id="modal-category"
-                        name="category"
-                        value={formData.category}
-                        onChange={(e) => {
-                            ChangeFormData(e.target.value, 'category');
-                        }}
-                        required
-                    >
-                        {category.map((v) => (
-                            <option value={v} key={v}>
-                                {v}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+            <form onSubmit={ClickSubmit} style={{ width: '600px', margin: '0 auto', maxHeight: '740px' }}>
+                <label className={styles.label} htmlFor="modal-category">
+                    category
+                </label>
+                <select
+                    className={styles.select}
+                    id="modal-category"
+                    name="category"
+                    value={formData.category}
+                    onChange={(e) => {
+                        ChangeFormData(e.target.value, 'category');
+                    }}
+                    required
+                >
+                    {category.map((v) => (
+                        <option value={v} key={v}>
+                            {v}
+                        </option>
+                    ))}
+                </select>
 
                 {inputList.map((v) =>
                     v.type === 'input' ? (
@@ -158,7 +156,14 @@ const WriteForm = ({
                     )
                 )}
                 {/* 버튼 영역 */}
-                <div style={{ display: 'flex', gap: '20px', justifyContent: 'flex-end' }}>
+                <div
+                    style={{
+                        display: 'flex',
+                        gap: '10px',
+                        justifyContent: 'flex-end',
+                        padding: '10px',
+                    }}
+                >
                     <button type="submit" className={'dashboardBtn'}>
                         Upload
                     </button>

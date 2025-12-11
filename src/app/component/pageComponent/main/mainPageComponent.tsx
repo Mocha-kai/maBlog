@@ -37,16 +37,17 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
     }, [postData]);
     //===
     const isMobile = useMediaQuery('(max-width: 768px)');
-    //페이지네이션
+    //===
     const [curPage, setCurPage] = useState<number>(1);
 
-    const postsPerPage = isMobile ? 2 : 7;
-    const totalPages = Math.ceil(p_data.length / postsPerPage);
+    const perPage = isMobile ? 2 : 7;
+    const totalPage = Math.ceil(p_data.length / perPage);
 
-    const indexOfLastPost = curPage * postsPerPage; // 마지막 인덱스 (예: 1페이지 * 5 = 5)
-    const indexOfFirstPost = indexOfLastPost - postsPerPage; // 시작 인덱스 (예: 5 - 5 = 0)
-
-    const currentPosts = p_data.slice(indexOfFirstPost, indexOfLastPost);
+    const lastIndex = curPage * perPage;
+    const startIndex = lastIndex - perPage;
+    //리스트에 보이는 부분
+    const curPosts = p_data.slice(startIndex, lastIndex);
+    //메인 화면에 보이는 부분
     const recentPosts = p_data.slice(0, 5);
     //===
     //데이터 삭제, 수정에 따른 새로고침 용
@@ -139,8 +140,10 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                 <ModalBody
                     size="normal"
                     html={
-                        <div className={'modalHeader'}>
-                            <h2 className="moduleTitle">[ADD Form]</h2>
+                        <>
+                            <div className={'modalHeader'}>
+                                <h2 className="moduleTitle">[ADD Form]</h2>
+                            </div>
                             <WriteForm
                                 category={['hobby', 'error', 'study']}
                                 inputList={[
@@ -153,7 +156,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                 setIsOpen={setIsAddBtnClick}
                                 setPData={setP_Data}
                             />
-                        </div>
+                        </>
                     }
                 />
             )}
@@ -164,8 +167,10 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                 <ModalBody
                     size="normal"
                     html={
-                        <div className={'modalHeader'}>
-                            <h2 className="moduleTitle">[Recent Detail]</h2>
+                        <>
+                            <div className={'modalHeader'}>
+                                <h2 className="moduleTitle">[Recent Detail]</h2>
+                            </div>
                             <ListDetailComponent post={detail} />
 
                             <div style={{ display: 'flex', gap: '20px', justifyContent: 'flex-end' }}>
@@ -201,7 +206,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                     [X]
                                 </button>
                             </div>
-                        </div>
+                        </>
                     }
                 />
             )}
@@ -212,8 +217,10 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                 <ModalBody
                     size="normal"
                     html={
-                        <div className={'modalHeader'}>
-                            <h2 className="moduleTitle">[Fix Form]</h2>
+                        <>
+                            <div className={'modalHeader'}>
+                                <h2 className="moduleTitle">[Fix Form]</h2>
+                            </div>
                             <WriteFormFix
                                 setPData={setP_Data}
                                 setDetailData={setDetailData}
@@ -225,7 +232,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                     { name: 'content', type: 'TextArea' },
                                 ]}
                             />
-                        </div>
+                        </>
                     }
                 />
             )}
@@ -239,7 +246,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                     html={
                         <>
                             <div className={'modalHeader'}>
-                                <h2 className="moduleTitle">[POSTS LIST]</h2>
+                                <h2 className="moduleTitle">[POST LIST]</h2>
                                 <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
                                     {isLogin && (
                                         <>
@@ -261,7 +268,9 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                             <button
                                                 className={'dashboardBtn writeBtn'}
                                                 onClick={() => {
-                                                    setIsFixClick(true);
+                                                    if (detail) {
+                                                        setIsFixClick(true);
+                                                    }
                                                 }}
                                             >
                                                 [FIX]
@@ -297,10 +306,13 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                     </button>
                                 </div>
                             </div>
+                            {/* ======================= */}
+                            {/* More 창에서 리스트와 디테일 보이는 부분 */}
+                            {/* ======================= */}
                             <div className={'logList'}>
                                 <div className="logListLeft">
                                     <div className="LeftContent">
-                                        {currentPosts.map((v) => (
+                                        {curPosts.map((v) => (
                                             <div
                                                 className="logPlaceholderCard"
                                                 key={v.slug.toString()}
@@ -329,16 +341,22 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                             </div>
                                         ))}
                                     </div>
+                                    {/* ======================= */}
+                                    {/* 페이지네이션 */}
+                                    {/* ======================= */}
                                     {p_data.length > 0 ? (
                                         <MakePage
-                                            totalPages={totalPages}
+                                            totalPages={totalPage}
                                             currentPage={curPage}
                                             onPageChange={setCurPage}
                                         />
                                     ) : (
-                                        <p>No Posts Data</p>
+                                        <p>No Post</p>
                                     )}
                                 </div>
+                                {/* ======================= */}
+                                {/* 상세보기 */}
+                                {/* ======================= */}
                                 <div className="logListRight">
                                     <ListDetailComponent post={detail} />
                                 </div>

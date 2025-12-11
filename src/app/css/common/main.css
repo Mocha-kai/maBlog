@@ -72,7 +72,7 @@
 }
 
 .logList {
-    height: 60vh;
+    align-items: center;
     display: flex;
     gap: 20px;
 }
@@ -98,7 +98,8 @@
     border: 1px solid #00ff41;
     width: 40%;
     padding: 20px;
-    height: 100%;
+    height: 40vh;
+    min-height: 500px;
 }
 
 .LeftContent {
@@ -112,6 +113,8 @@
     color: #00ff41;
     width: 60%;
     padding: 20px;
+    height: 40vh;
+    min-height: 500px;
 }
 .logPlaceholderCard_title {
     width: 300px;
@@ -142,19 +145,25 @@
         flex-direction: column;
     }
 
+    .LeftContent {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .logListLeft {
+        width: 100%;
+        background-color: transparent;
+        color: #00ff41;
+        border: 1px solid #00ff41;
+        padding: 10px;
+        height: 140px;
+        min-height: 0px;
+    }
+
     .logListRight {
-        margin-top: 20px;
         padding: 10px;
         width: 100%;
         overflow-y: auto;
-        box-sizing: border-box;
-    }
-
-    .logListLeft {
-        width: 100%;
-        height: 120px;
-        padding: 10px;
-        box-sizing: border-box;
     }
 
     .logPlaceholderCard {
