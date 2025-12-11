@@ -40,7 +40,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
     //페이지네이션
     const [curPage, setCurPage] = useState<number>(1);
 
-    const postsPerPage = isMobile ? 1 : 7;
+    const postsPerPage = isMobile ? 2 : 7;
     const totalPages = Math.ceil(p_data.length / postsPerPage);
 
     const indexOfLastPost = curPage * postsPerPage; // 마지막 인덱스 (예: 1페이지 * 5 = 5)
@@ -310,23 +310,33 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                             >
                                                 <div className="logPlaceholderCard_category">{v.category}</div>
                                                 <div
-                                                    className="logPlaceholderCard_title"
-                                                    style={{ marginLeft: '15px', marginTop: 15, fontSize: '12px' }}
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'row',
+                                                        justifyContent: 'space-between',
+                                                    }}
                                                 >
-                                                    {v.title}
-                                                </div>
-                                                <div className="logPlaceholderCard_date" style={{ textAlign: 'right' }}>
-                                                    {CurFormatKORDate(v.date.toString())}
+                                                    <div className="logPlaceholderCard_title" style={{}}>
+                                                        {v.title}
+                                                    </div>
+                                                    <div
+                                                        className="logPlaceholderCard_date"
+                                                        style={{ textAlign: 'right' }}
+                                                    >
+                                                        {CurFormatKORDate(v.date.toString())}
+                                                    </div>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
-                                    {p_data.length > 0 && (
+                                    {p_data.length > 0 ? (
                                         <MakePage
                                             totalPages={totalPages}
                                             currentPage={curPage}
                                             onPageChange={setCurPage}
                                         />
+                                    ) : (
+                                        <p>No Posts Data</p>
                                     )}
                                 </div>
                                 <div className="logListRight">

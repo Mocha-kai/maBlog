@@ -5,6 +5,7 @@ import { IStackDocument } from '@/app/api/models/stacks/model_stacks';
 import WriteFormStack from './writeFormUser';
 import ModalBody from '../../common/modal';
 import Bubble from '../../common/bubble';
+import { useMediaQuery } from '@mui/material';
 
 const AboutMe = ({ isLogin, stackData }: { isLogin: boolean; stackData: IStackDocument[] }) => {
     const [pos, setPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -14,6 +15,8 @@ const AboutMe = ({ isLogin, stackData }: { isLogin: boolean; stackData: IStackDo
     const [isAddBtn, setIsAddBtn] = useState<boolean>(false);
     const [isDeleteModal, setIsDeleteModal] = useState<boolean>(false);
     const [isDelete, setIsDelete] = useState<boolean>(false);
+    //===
+    const isMobile = useMediaQuery('(max-width: 768px)');
     //===
     useEffect(() => {
         const RefreshStackData = async () => {
@@ -68,6 +71,7 @@ const AboutMe = ({ isLogin, stackData }: { isLogin: boolean; stackData: IStackDo
                         style={{ backgroundColor: v.color }}
                         key={v.slug}
                         onClick={(e) => {
+                            if (isMobile) return;
                             setIsDeleteModal(true);
                             setGetId(v._id.toString());
                             setPos({ x: e.clientX, y: e.clientY });

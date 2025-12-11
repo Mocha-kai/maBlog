@@ -4,19 +4,19 @@
 
 .articleContainer {
     width: 100%;
+    height: 100%; /* 반응형 적용 */
     background-color: #000;
     color: #00ff41;
     line-height: 1.5;
     white-space: pre-wrap;
-    height: 750px; /* 반응형 적용 */
     overflow-y: auto;
     overflow-x: hidden;
     word-break: break-all;
 }
 /* 스크롤 바 전체 트랙의 너비/높이 설정 */
 .articleContainer::-webkit-scrollbar {
-    width: 10px; /* 스크롤 바의 너비 */
-    height: 10px;
+    width: 8px; /* 스크롤 바의 너비 */
+    height: 8px;
 }
 
 /* 스크롤 바가 움직이는 배경 (트랙) */
@@ -159,7 +159,8 @@
 /* 768px 이하 (태블릿 및 모바일) */
 @media (max-width: 768px) {
     .articleContainer {
-        height: 95%; /* 반응형 적용 */
+        width: 100%;
+        height: 400px;
     }
 
     .markdown-body {

@@ -1,7 +1,9 @@
 .dashboardContainer {
-    width: 1200px;
-    height: 100%;
+    max-width: 1200px;
+    max-height: 900px;
+    width: 95%;
     margin: 0 auto;
+    padding: 0 10px;
 }
 .dashboardHeader {
     padding: 20px;
@@ -70,10 +72,9 @@
 }
 
 .logList {
-    max-height: 800px;
+    height: 60vh;
     display: flex;
     gap: 20px;
-    padding-right: 10px;
 }
 .logPlaceholder {
     width: 300px;
@@ -82,39 +83,43 @@
     text-overflow: ellipsis;
 }
 .logPlaceholderCard {
-    font-size: 12px;
+    font-size: 10px;
+    height: 40px;
     color: #00ff41;
-    padding: 10px;
+    padding: 5px 10px;
     white-space: pre;
     border: 1px solid #00ff41;
     overflow: hidden;
+    box-sizing: border-box;
 }
 .logListLeft {
     background-color: transparent;
     color: #00ff41;
     border: 1px solid #00ff41;
     width: 40%;
-    height: 800px;
     padding: 20px;
-    box-sizing: border-box;
+    height: 100%;
 }
 
 .LeftContent {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    box-sizing: border-box;
 }
 
 .logListRight {
     background-color: transparent;
     color: #00ff41;
-    width: 100%;
-    border: 1px solid #00ff41;
+    width: 60%;
     padding: 20px;
-    box-sizing: border-box;
 }
-
+.logPlaceholderCard_title {
+    width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+}
 @media (max-width: 768px) {
     .dashboardContainer {
         width: 320px;
@@ -133,31 +138,33 @@
         display: none;
     }
     .logList {
+        height: 100%;
         flex-direction: column;
     }
+
     .logListRight {
+        margin-top: 20px;
+        padding: 10px;
         width: 100%;
-        height: 400px;
-        margin-bottom: 20px;
+        overflow-y: auto;
+        box-sizing: border-box;
     }
 
     .logListLeft {
         width: 100%;
-        height: 100%;
+        height: 120px;
+        padding: 10px;
+        box-sizing: border-box;
     }
 
     .logPlaceholderCard {
+        width: 100%;
         display: flex;
+        flex-direction: column;
     }
 
     .logPlaceholderCard_title {
         width: 200px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .logPlaceholderCard_date {
-        display: none;
     }
 
     .moduleTitle {
