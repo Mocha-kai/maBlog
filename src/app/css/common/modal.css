@@ -30,7 +30,7 @@
 }
 .modalContent {
     width: 1200px;
-    max-width: 95%;
+    max-width: 100%;
     min-height: 600px;
     max-height: 780px;
     background-color: #000;
@@ -86,20 +86,15 @@
 }
 
 /* ==================================== */
-/* 반응형 (모바일) */
 @media (max-width: 768px) {
     .modalBackdrop {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        height: 100vh;
+        height: 100%;
         background-color: rgba(0, 0, 0, 0.95);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 2000;
-        padding: 20px;
+        margin: 0 auto;
         box-sizing: border-box;
     }
     .monitorGrid {
@@ -110,6 +105,5 @@
 
     .modalContent {
         width: 300px;
-        height: 100%;
     }
 }

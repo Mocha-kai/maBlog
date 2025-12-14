@@ -1,6 +1,5 @@
 import NextAuth from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
-import { env } from 'process';
 
 const handler = NextAuth({
     providers: [
@@ -13,22 +12,32 @@ const handler = NextAuth({
         error: '/',
     },
     callbacks: {
-        async signIn({ user, profile }) {
-            const myEmail = env.GIT_EMAIL;
+        async jwt({ token, profile, account }) {
+        if (account?.provider === 'github' && profile) {
+            const githubProfile = profile as { id: number };
+            token.isAdmin =
+            githubProfile.id === Number(process.env.GITHUB_ADMIN_ID);
+        }
 
-            const email = user?.email || profile?.email || null;
+        // 👇 이미 설정된 값 유지
+        token.isAdmin = token.isAdmin ?? false;
 
-            if (!email) return false;
-
-            return email === myEmail;
+        return token;
         },
 
-        async session({ session }) {
+        async session({ session, token }) {
+            if (session.user) {
+                session.user.isAdmin = token.isAdmin as boolean;
+            }
             return session;
         },
     },
+
 
     secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { handler as GET, handler as POST };
+
+
+//https://api.github.com/users/Mocha-kai

@@ -7,11 +7,12 @@ import '../../app/globals.css';
 //===
 import '@/app/css/list/listDetail.css';
 import '@/app/css/common/makePage.css';
-import '@/app/css/common/btn.css';
 import '@/app/css/common/modal.css';
 import '@/app/css/common/aboutMe.css';
 import '@/app/css/common/main.css';
 import '@/app/css/common/bubble.css';
+import '@/app/css/common/crt.css';
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (

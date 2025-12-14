@@ -14,6 +14,10 @@ import ListDetailComponent from '../list/listDetail';
 import WriteFormFix from './writeFormFix';
 import { IPostDataWithHtml } from '@/app/api/models/posts/model_posts';
 import { useMediaQuery } from '@mui/material';
+import GetDockerrState from '../../common/getDockerState';
+import DockerContainersBox from '../../common/getDockerState';
+import GetServerState from '../../common/getServerState';
+import { Height } from '@mui/icons-material';
 
 //===
 const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtml[]; stackData: IStackDocument[] }) => {
@@ -85,22 +89,23 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
             {/* ======================= */}
             {/* 기본적인 자기소개*/}
             {/* ======================= */}
-            <div className="" style={{ padding: '20px' }}>
-                <AboutMe isLogin={isLogin} stackData={stackData} />
-            </div>
+       
+            <AboutMe isLogin={isLogin} stackData={stackData} />
+   
             <div className="dashboardGrid">
                 {/* ======================= */}
                 {/* SYSTEM_STATUS */}
                 {/* ======================= */}
                 <div className="gridItem">
                     <h2 className="moduleTitle">[SYSTEM_STATUS]</h2>
-                    <div className="chartPlaceholder">CPU: [[||||||]] 70%</div>
+                   <GetServerState />
                 </div>
                 {/* ======================= */}
                 {/* DOCKER_CONTAINERS*/}
                 {/* ======================= */}
                 <div className="gridItem">
                     <h2 className="moduleTitle">[DOCKER_CONTAINERS]</h2>
+                    <DockerContainersBox />
                 </div>
                 {/* ======================= */}
                 {/* RECENT_POSTS*/}
@@ -171,8 +176,6 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                             <div className={'modalHeader'}>
                                 <h2 className="moduleTitle">[Recent Detail]</h2>
                             </div>
-                            <ListDetailComponent post={detail} />
-
                             <div style={{ display: 'flex', gap: '20px', justifyContent: 'flex-end' }}>
                                 {/* ======================= */}
                                 {/* DELETE */}
@@ -206,6 +209,10 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                     [X]
                                 </button>
                             </div>
+                            <div className={isMobile ? 'm_recent' : ''}> 
+                                <ListDetailComponent post={detail} type='recent' />
+                            </div>
+
                         </>
                     }
                 />
@@ -358,7 +365,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                 {/* 상세보기 */}
                                 {/* ======================= */}
                                 <div className="logListRight">
-                                    <ListDetailComponent post={detail} />
+                                    <ListDetailComponent post={detail} type='more'/>
                                 </div>
                             </div>
                         </>
