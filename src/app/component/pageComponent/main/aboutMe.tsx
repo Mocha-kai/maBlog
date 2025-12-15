@@ -92,6 +92,7 @@ const AboutMe = ({ isLogin, stackData }: { isLogin: boolean; stackData: IStackDo
             {/* ============== */}
             {isAddBtn && (
                 <ModalBody
+                    isOpen={isAddBtn}
                     pos={pos}
                     size="mini"
                     html={

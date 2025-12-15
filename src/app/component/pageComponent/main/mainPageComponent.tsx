@@ -1,23 +1,21 @@
 'use client';
 //===
+import { useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 //===
 import { IStackDocument } from '@/app/api/models/stacks/model_stacks';
+import { CurFormatKORDate } from '../../common/CurFormatKORDate';
+import { IPostDataWithHtml } from '@/app/api/models/posts/model_posts';
 //===
+import MakePage from '../../common/makePage';
 import AboutMe from '@/app/component/pageComponent/main/aboutMe';
 import WriteForm from './writeForm';
 import AuthButton from '@/app/component/common/authBtn';
 import ModalBody from '../../common/modal';
-import MakePage from '../../common/makePage';
-import { CurFormatKORDate } from '../../common/CurFormatKORDate';
-import ListDetailComponent from '../list/listDetail';
 import WriteFormFix from './writeFormFix';
-import { IPostDataWithHtml } from '@/app/api/models/posts/model_posts';
-import { useMediaQuery } from '@mui/material';
-import GetDockerrState from '../../common/getDockerState';
-import DockerContainersBox from '../../common/getDockerState';
 import GetServerState from '../../common/getServerState';
-import { Height } from '@mui/icons-material';
+import ListDetailComponent from '../list/listDetail';
+import DockerContainersBox from '../../common/getDockerState';
 
 //===
 const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtml[]; stackData: IStackDocument[] }) => {
@@ -89,16 +87,16 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
             {/* ======================= */}
             {/* 기본적인 자기소개*/}
             {/* ======================= */}
-       
+
             <AboutMe isLogin={isLogin} stackData={stackData} />
-   
+
             <div className="dashboardGrid">
                 {/* ======================= */}
                 {/* SYSTEM_STATUS */}
                 {/* ======================= */}
                 <div className="gridItem">
                     <h2 className="moduleTitle">[SYSTEM_STATUS]</h2>
-                   <GetServerState />
+                    <GetServerState />
                 </div>
                 {/* ======================= */}
                 {/* DOCKER_CONTAINERS*/}
@@ -143,6 +141,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
             {/* ======================= */}
             {isAddClick && (
                 <ModalBody
+                    isOpen={isAddClick}
                     size="normal"
                     html={
                         <>
@@ -170,6 +169,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
             {/* ======================= */}
             {isRecentBtnClick && (
                 <ModalBody
+                    isOpen={isRecentBtnClick}
                     size="normal"
                     html={
                         <>
@@ -209,10 +209,9 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                     [X]
                                 </button>
                             </div>
-                            <div className={isMobile ? 'm_recent' : ''}> 
-                                <ListDetailComponent post={detail} type='recent' />
+                            <div className={isMobile ? 'm_recent' : ''}>
+                                <ListDetailComponent post={detail} type="recent" />
                             </div>
-
                         </>
                     }
                 />
@@ -222,6 +221,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
             {/* ======================= */}
             {isFixClick && detail && (
                 <ModalBody
+                    isOpen={isFixClick}
                     size="normal"
                     html={
                         <>
@@ -249,6 +249,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
             {/* ======================= */}
             {isMoreBtnClick && (
                 <ModalBody
+                    isOpen={isMoreBtnClick}
                     size="normal"
                     html={
                         <>
@@ -365,7 +366,7 @@ const MainPageComponent = ({ postData, stackData }: { postData: IPostDataWithHtm
                                 {/* 상세보기 */}
                                 {/* ======================= */}
                                 <div className="logListRight">
-                                    <ListDetailComponent post={detail} type='more'/>
+                                    <ListDetailComponent post={detail} type="more" />
                                 </div>
                             </div>
                         </>
