@@ -30,9 +30,6 @@
 }
 .modalContent {
     width: 1200px;
-    max-width: 100%;
-    min-height: 600px;
-    max-height: 780px;
     background-color: #000;
     border: 3px solid #00ff41;
     padding: 10px;
@@ -104,6 +101,7 @@
     }
 
     .modalContent {
-        width: 300px;
+        width: 95%;
+        height: 95%;
     }
 }
