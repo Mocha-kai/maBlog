@@ -1,7 +1,7 @@
-.articleContainer, 
+.articleContainer,
 .articleContainer_recent {
     width: 100%;
-    min-height: 480px; 
+    min-height: 480px;
     background-color: #000;
     color: #00ff41;
     white-space: pre-wrap;
@@ -10,22 +10,22 @@
 }
 
 .articleContainer::-webkit-scrollbar {
-    width: 8px; 
+    width: 8px;
     height: 8px;
 }
 
 .articleContainer::-webkit-scrollbar-track {
     background: transparent;
-    border: 1px solid rgba(0, 255, 65, 0.1); 
+    border: 1px solid rgba(0, 255, 65, 0.1);
 }
 
 .articleContainer::-webkit-scrollbar-thumb {
-    background-color: #00ff41; 
-    border-radius: 5px; 
-    border: 2px solid #000000; 
+    background-color: #00ff41;
+    border-radius: 5px;
+    border: 2px solid #000000;
 }
 
-.articleContainer_recent{
+.articleContainer_recent {
     height: 490px;
     min-height: 0;
 }
@@ -35,17 +35,15 @@
     height: 8px;
 }
 
-
 .articleContainer_recent::-webkit-scrollbar-track {
     background: transparent;
     border: 1px solid rgba(0, 255, 65, 0.1);
 }
 
-
 .articleContainer_recent::-webkit-scrollbar-thumb {
-    background-color: #00ff41; 
-    border-radius: 5px; 
-    border: 2px solid #000000; 
+    background-color: #00ff41;
+    border-radius: 5px;
+    border: 2px solid #000000;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -60,8 +58,10 @@
     width: 100%;
     border-bottom: 2px solid #00ff41;
     padding-bottom: 15px;
-    margin-bottom: 25px; /* 본문과의 간격 증가 */
+    margin-bottom: 25px;
     overflow-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .categoryTag {
@@ -76,7 +76,7 @@
 }
 
 .title {
-    font-size: 1.6rem; /* h1보다 작은 크기로 명확히 구분 */
+    font-size: 14px; /* h1보다 작은 크기로 명확히 구분 */
     font-weight: 700;
     color: #ffffff;
     margin: 15px 0 5px 0;
@@ -100,8 +100,8 @@
     overflow: auto;
 }
 
-.recent{
-    height: 100%;
+.recent {
+    height: 70%;
 }
 
 .markdown-body a {
@@ -166,18 +166,16 @@
     stroke: #00ff41;
 }
 
-
- @media (max-width: 768px) {
-
+@media (max-width: 768px) {
     .articleContainer {
         width: 100%;
         height: 100%;
         min-height: 0px;
     }
 
-    .articleContainer_recent{
+    .articleContainer_recent {
         width: 100%;
-        height: 75%;
+        height: 85%;
         min-height: 0;
         font-size: 10px;
         background-color: #000;
@@ -186,10 +184,9 @@
         padding: 8px;
         box-sizing: border-box;
     }
-    .m_recent{
+    .m_recent {
         width: 100%;
         height: 100%;
-        overflow: auto;
     }
     .markdown-body {
         width: 100%;
@@ -202,15 +199,15 @@
         box-sizing: border-box;
     }
 
-    .recent{
-        width: 320px;
-        height: 460px;
+    .recent {
+        height: 430px;
     }
 
     .header {
         width: 100%;
         border-bottom: 2px solid #00ff41;
-        overflow-wrap: break-word;
+        margin-bottom: 0px;
+        font-size: 11px;
     }
     .title {
         font-size: 12px; /* h1보다 작은 크기로 명확히 구분 */
@@ -234,12 +231,12 @@
 
     /* 코드 블록 (.markdown-body pre) */
     .markdown-body pre {
-        font-size: 10px; 
+        font-size: 10px;
         padding: 5px;
         /* 핵심: 줄바꿈 허용 (공백 유지, 필요 시 줄바꿈) */
         white-space: pre-wrap;
         /* 핵심: 긴 단어를 강제로 문자 단위로 줄바꿈 */
-        word-break: break-all; 
+        word-break: break-all;
         /* 컨테이너를 넘어가는 경우에만 수평 스크롤 허용 (안전 장치) */
         overflow-x: auto;
     }
@@ -247,7 +244,7 @@
     /* 🛠️ [수정] 인라인 코드 (code) */
     /* ---------------------------------------------------- */
     .markdown-body code {
-        font-size: 10px; 
+        font-size: 10px;
         word-break: break-word;
         white-space: pre-wrap;
     }
@@ -257,4 +254,4 @@
         margin: 10px 0;
         padding-left: 10px;
     }
-}  
+}

@@ -32,3 +32,9 @@
     margin: 20px 0;
     justify-content: flex-start;
 }
+
+@media (max-width: 768px) {
+    .pagination {
+        margin: 10px 0;
+    }
+}

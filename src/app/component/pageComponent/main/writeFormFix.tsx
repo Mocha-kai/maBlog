@@ -89,7 +89,7 @@ const WriteFormFix = ({
     if (!updateData) return;
     return (
         <section style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-            <form onSubmit={ClickSubmit} style={{ width: '600px', margin: '0 auto' }}>
+            <form onSubmit={ClickSubmit} style={{ width: '50%', margin: '0 auto' }}>
                 <div className={styles.inputGroup}>
                     <label className={styles.label} htmlFor="modal-category">
                         category
@@ -152,9 +152,9 @@ const WriteFormFix = ({
                     )
                 )}
                 {/* 버튼 영역 */}
-                <div style={{ display: 'flex', gap: '20px', justifyContent: 'flex-end' }}>
+                <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '10px' }}>
                     <button type="submit" className={'dashboardBtn'}>
-                        Update
+                        update
                     </button>
                     <button type="submit" className={'dashboardBtn'} onClick={() => setIsOpen(false)}>
                         [x]

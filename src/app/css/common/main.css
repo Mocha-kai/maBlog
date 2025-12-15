@@ -93,6 +93,7 @@
 }
 .logListLeft {
     background-color: transparent;
+    box-sizing: border-box;
     color: #00ff41;
     border: 1px solid #00ff41;
     width: 40%;
@@ -107,11 +108,11 @@
 }
 
 .logListRight {
+    box-sizing: border-box;
     background-color: transparent;
     color: #00ff41;
     width: 60%;
-    padding: 20px;
-    max-height: 500px;
+    height: 540px;
 }
 .logPlaceholderCard_title {
     width: 300px;
@@ -123,7 +124,6 @@
 @media (max-width: 768px) {
     .dashboardHeader {
         padding: 10px;
-
     }
     .dashboardContainer {
         padding: 0px;
@@ -153,14 +153,13 @@
     }
     .logListLeft {
         width: 100%;
+        height: 150px;
         background-color: transparent;
         color: #00ff41;
         border: 1px solid #00ff41;
         padding: 10px;
-        height: 100px;
         min-height: 0px;
     }
-
 
     .logListRight {
         background-color: transparent;
@@ -168,7 +167,7 @@
         width: 100%;
         padding: 10px;
         height: 100%;
-        max-height: 450px;
+        max-height: 300px;
     }
 
     .logPlaceholderCard {
