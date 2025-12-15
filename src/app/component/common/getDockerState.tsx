@@ -8,13 +8,18 @@ export default function DockerContainersBox() {
     const [containers, setContainers] = useState<DockerContainer[]>([]);
 
     useEffect(() => {
-        fetch('/api/system/docker', { cache: 'no-store' })
-            .then((res) => res.json())
-            .then(setContainers)
-            .catch(() => setContainers([]));
+        const GetDataOCIServer = async () => {
+            await fetch('/api/system/docker', { cache: 'no-store' })
+                .then((res) => res.json())
+                .then(setContainers)
+                .catch(() => setContainers([]));
+        };
+        GetDataOCIServer();
+        const timer = setInterval(GetDataOCIServer, 5000);
+        return () => clearInterval(timer);
     }, []);
 
-    console.log('containers', containers);
+    if (containers.length === 0) return <div>Loading...</div>;
 
     return (
         <div className={styles.box}>
@@ -25,11 +30,11 @@ export default function DockerContainersBox() {
             {containers.map((c: DockerContainer) => (
                 <div key={c.ID} className={styles.item}>
                     <span className={styles.bullet}>▶</span>{' '}
-                    {c.Names === 'mablog_proxy'
+                    {c.Names.includes('proxy')
                         ? 'proxy_container'
-                        : c.Names === 'mablog_nextjs'
+                        : c.Names.includes('nextjs')
                         ? 'server_container'
-                        : c.Names === 'mablog_mongodb'
+                        : c.Names.includes('mongodb')
                         ? 'data_container'
                         : 'security_container'}
                     <span className={styles.status}> — {c.Status}</span>
