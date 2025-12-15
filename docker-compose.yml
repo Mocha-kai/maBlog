@@ -1,3 +1,4 @@
+
 services:
     # --------------------------
     # MongoDB
@@ -17,7 +18,7 @@ services:
             - mablog_network
 
     # --------------------------
-    # Next.js 앱
+    # Next.js
     # --------------------------
     mablog_nextjs:
         build:
@@ -26,24 +27,30 @@ services:
         container_name: mablog_nextjs
         restart: always
         expose:
-            - '8080' # 내부 연결용
+            - "8080"
         env_file:
             - ./.env.production
+        environment:
+            - HOST=0.0.0.0
+            - PORT=8080
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - /opt/ma_blog/read_os:/opt/ma_blog/read_os
         depends_on:
             - db
         networks:
             - mablog_network
 
     # --------------------------
-    # Nginx 프록시
+    # Nginx Reverse Proxy
     # --------------------------
     mablog_proxy:
         image: nginx:stable-alpine
         container_name: mablog_proxy
         restart: always
         ports:
-            - '80:80' # HTTP
-            - '443:443' # HTTPS
+            - "80:80"
+            - "443:443"
         volumes:
             - ./nginx.conf:/etc/nginx/nginx.conf:ro
             - ./certbot/www:/var/www/certbot
@@ -54,24 +61,24 @@ services:
             - mablog_network
 
     # --------------------------
-    # Certbot 인증서 발급
+    # Certbot (자동 갱신 전용)
     # --------------------------
     certbot:
         image: certbot/certbot
         container_name: certbot
+        restart: unless-stopped
         volumes:
             - ./certbot/www:/var/www/certbot
             - ./certbot/conf:/etc/letsencrypt
-        entrypoint: ''
-        command: >
-            certbot certonly
-            --webroot
-            --webroot-path=/var/www/certbot
-            --email kai@mocha-company.com
-            --agree-tos
-            --no-eff-email
-            -d madayblog.com
-            -d www.madayblog.com
+        entrypoint: >
+            sh -c "trap exit TERM;
+            while :; do
+              certbot renew
+                --webroot -w /var/www/certbot
+                --non-interactive
+                --quiet;
+              sleep 12h;
+            done"
         networks:
             - mablog_network
 

@@ -1,0 +1,50 @@
+.box {
+    color: #00ff66;
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+    padding: 10px 14px;
+}
+
+.title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.separator {
+    border-bottom: 1px solid #00aa44;
+    opacity: 0.5;
+    margin: 6px 0;
+}
+
+.item {
+    margin: 3px 0;
+    white-space: nowrap;
+}
+
+.bullet {
+    color: #00ff99;
+    margin-right: 6px;
+}
+
+.status {
+    opacity: 0.6;
+}
+
+.footer {
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+.empty {
+    opacity: 0.5;
+    font-style: italic;
+}
+
+
+@media (max-width: 768px) {
+    .box {
+           font-size: 12px;
+           padding: 0;
+    }
+
+}
