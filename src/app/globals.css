@@ -47,7 +47,7 @@ body::before {
 /* ==================================== */
 /* 링크 기본 스타일 */
 a {
-    color: #f7931e; /* 따뜻한 오렌지 포인트 컬러 */
+    color: #00ff41; /* 따뜻한 오렌지 포인트 컬러 */
     text-decoration: none;
     transition: color 0.2s ease;
 }
@@ -72,7 +72,14 @@ h6 {
     color: #ffffff;
     line-height: 1.3;
 }
+table {
+  border-collapse: collapse;
+}
 
+th, td {
+  border: 1px solid #00ff41;
+  padding: 6px 10px;
+}
 @keyframes textGlow {
     0% {
         text-shadow: 0 0 4px #00ff00;
